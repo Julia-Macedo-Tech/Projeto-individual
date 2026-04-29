@@ -1,7 +1,12 @@
+@font-face {
+    font-family: "Bazinga";
+    src: url(../assets/fonte/Bazinga!\ Italic\ 400.otf);
+}
+
 body {
     background-color: #0a0014;
     color: #ffffff;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Bazinga";
 }
 
 .header {
@@ -9,7 +14,6 @@ body {
     box-shadow: 0.3125rem 0.3125rem 1.25rem -0.6875rem #00000075;
     padding: 1.8rem 0;
     position: sticky;
-    top: 0;
     width: 100%;
 }
 
