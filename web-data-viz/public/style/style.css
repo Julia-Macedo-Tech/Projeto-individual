@@ -1,71 +1,130 @@
 @font-face {
     font-family: "Bazinga";
-    src: url(../assets/fonte/Bazinga!\ Italic\ 400.otf);
+    src: url(../assets/fonte/Bazinga-Regular.otf);
 }
 
+@font-face {
+    font-family: "Bazinga Italic";
+    src: url(../assets/fonte/Bazinga-RegularItalic.otf);
+}
+
+@font-face {
+    font-family: "Open sans";
+    src: url(../assets/fonte/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
+.div-icons {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.laranja {
+    background-color: #ed7628;
+}
+
+.div-icons .material-symbols-outlined {
+  color: #ffffff;
+  font-size: 25px; 
+  font-variation-settings: 'opsz' 40;
+}
+
+
 body {
-    background-color: #0a0014;
+    background-color: #1a1a2e;
     color: #ffffff;
     font-family: "Bazinga";
 }
 
 .header {
-    background-color: #190025;
-    box-shadow: 0.3125rem 0.3125rem 1.25rem -0.6875rem #00000075;
-    padding: 1.8rem 0;
-    position: sticky;
     width: 100%;
+    background-color: #1a1a2e87;  
+    position: fixed;
 }
 
 .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.875rem;
+    justify-content: center;
 }
 
 .titulo {
-    font-size: 2.2rem;
-    margin: 0;
-    font-weight: 800;
+    color: #ffd600;
+    margin-left: 3%;
+    font-size: 30px;
 }
 
 .navbar {
     display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-}
-
-.navbar li {
-    margin-left: 2.2rem;
-    display: flex;
-    align-items: center;
 }
 
 .navbar a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.navbar li button {
-    background-color: #421e58b8;
-    font-family: 'Times New Roman', Times, serif;
     color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 2px;
+    font-family: 'Open Sans';
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
 }
 
-#sobre h1{
+.navbar li {
+    color: #ffffff;
+    font-family: 'Open Sans';
+    list-style: none;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.navbar li a button {
+    background-color: #ffd600;
+    padding-left: 9px;
+    padding-right: 9px;
+    font-family: "Bazinga";
+    color: #1a1a2e;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+}
+
+.inicio-banner {
+    background-image: url(../assets/img/banner.png);
+    height: 730px;
+    display: flex;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicio-banner .banner-texto {
+    width: 50%;
+    text-align: center;
+}
+
+.banner-texto p {
+    color: #ffffff;
+    font-size: 120px;
+}
+
+.banner-texto span {
+    font-weight: bold;
+    color: #ffd600;
+}
+
+/***********************************************SOBRE************************************************************/
+.cor-clara {
+    background-color: #fffbf0;
+}
+
+#sobre {
+    padding-top: 0.5%;
+}
+
+#sobre h1 {
     display: flex;
     justify-content: center;
+    color: #ed7628;
 }
 
 .container1 {
@@ -78,12 +137,13 @@ body {
     width: 500px;
 }
 
-.sobre-texto span{
+.sobre-texto span {
     color: #ffffffb4;
     margin-bottom: 10px;
+    color: #9595a0;
 }
 
-.sobre-texto p{
+.sobre-texto p {
     color: #8a04ff;
     font-size: 30px;
     font-weight: 600;
@@ -99,12 +159,12 @@ body {
     flex-direction: column;
     align-items: center;
     margin-right: 80px;
-    border: 2px solid #ffffff38;
+    border: 2px solid #00000038;
     border-radius: 5px;
     width: 150px;
 }
 
-.card1 p{
+.card1 p {
     margin-bottom: -1px;
 }
 
@@ -112,16 +172,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid #ffffff38;
+    border: 2px solid #00000038;
     border-radius: 5px;
     width: 150px;
 }
 
-.card2 p{
+.card2 p {
     margin-bottom: -1px;
     margin-top: 15px;
 }
 
-.sobre-img img{
+.sobre-img img {
     width: 400px;
 }
