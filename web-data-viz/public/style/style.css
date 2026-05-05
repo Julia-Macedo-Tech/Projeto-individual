@@ -13,26 +13,6 @@
     src: url(../assets/fonte/OpenSans-VariableFont_wdth\,wght.ttf);
 }
 
-.div-icons {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.laranja {
-    background-color: #ed7628;
-}
-
-.div-icons .material-symbols-outlined {
-  color: #ffffff;
-  font-size: 25px; 
-  font-variation-settings: 'opsz' 40;
-}
-
-
 body {
     background-color: #1a1a2e;
     color: #ffffff;
@@ -127,6 +107,32 @@ body {
     color: #ed7628;
 }
 
+.comeco-texto {
+    display: flex;
+    justify-content: center;
+}
+
+.div-icons {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 22px;
+    margin-right: 10px;
+}
+
+.laranja {
+    background-color: #ed7628;
+}
+
+.div-icons .material-symbols-outlined {
+  color: #ffffff;
+  font-size: 25px; 
+  font-variation-settings: 'opsz' 40;
+}
+
 .container1 {
     display: flex;
     justify-content: center;
@@ -138,48 +144,79 @@ body {
 }
 
 .sobre-texto span {
-    color: #ffffffb4;
     margin-bottom: 10px;
     color: #9595a0;
+    font-family: "Open sans";
 }
 
 .sobre-texto p {
-    color: #8a04ff;
+    color: black;
     font-size: 30px;
     font-weight: 600;
+    font-family: "Bazinga";
 }
 
 .cards {
     display: flex;
-    justify-content: center;
 }
 
 .card1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 80px;
+    margin-right: 10px;
     border: 2px solid #00000038;
     border-radius: 5px;
-    width: 150px;
+    width: 220px;
+    background-color: white;
 }
 
 .card1 p {
     margin-bottom: -1px;
 }
 
+.card1 span {
+    font-family: "Open sans";
+    color: #9595a0;
+    font-weight: 500;
+}
+
 .card2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 10px;
     border: 2px solid #00000038;
     border-radius: 5px;
-    width: 150px;
+    width: 220px;
 }
 
 .card2 p {
     margin-bottom: -1px;
-    margin-top: 15px;
+}
+
+.card2 span {
+    font-family: "Bazinga";
+    color: #000000;
+}
+
+.card3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    border: 2px solid #00000038;
+    border-radius: 5px;
+    width: 220px;
+}
+
+.card3 p {
+    margin-bottom: -1px;
+}
+
+.card3 span {
+    font-family: "Bazinga";
+    color: #000000;
 }
 
 .sobre-img img {

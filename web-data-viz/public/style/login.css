@@ -1,0 +1,88 @@
+@font-face {
+    font-family: "Bazinga";
+    src: url(../assets/fonte/Bazinga-Regular.otf);
+}
+
+@font-face {
+    font-family: "Bazinga Italic";
+    src: url(../assets/fonte/Bazinga-RegularItalic.otf);
+}
+
+@font-face {
+    font-family: "Open sans";
+    src: url(../assets/fonte/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
+body {
+    margin: 0;
+    font-family: "Bazinga";
+    width: 100%;
+    height: 728px;
+    display: flex;
+    flex-direction: row;
+}
+
+.container-amarelo {
+    background-color: #ffd600;
+    width: 50%;
+
+    img {
+        width: 100px;
+    }
+}
+
+.container-azul {
+    background-color: #1a1a2e;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .titulo {
+        color: #ffffff;
+        margin-bottom: -0.2%;
+        font-family: "Bazinga";
+        font-size: 36px;
+    }
+
+    p {
+        color: #ffd600;
+        font-family: "Open sans";
+        font-weight: 500;
+    }
+    
+    span {
+        color: #9595a0;
+        font-family: "Open sans"; 
+    }
+
+    input {
+        padding: 8px;
+        background-color: #9595a089;
+        border-radius: 20px;
+        border: none;
+        width: 200px;
+    }
+
+    .entrar {
+        padding: 10px;
+        width: 200px;
+        border-radius: 15px;
+        background-color: #ffd600;
+        color: #1a1a2e;
+        font-family: "Bazinga";
+    }
+
+    .cadastre-se {
+        padding: 10px;
+        width: 200px;
+        border-radius: 15px;
+        border: 2px solid #ffd600;
+        background-color: #1a1a2e;
+    }
+
+    .cadastre-se a {
+        text-decoration: none;
+        color: #ffd600;
+    }
+}

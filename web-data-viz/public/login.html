@@ -6,22 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
+    <link rel="stylesheet" href="style/login.css">
     <script src="js/sessao.js"></script>
+    <link rel="icon" href="assets/icon/icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
 
 <body>
 
-    <div>
+    <div class="container-amarelo">
+
+        <img src="assets/icon/icon.png" alt="">
+
+    </div>
+
+    <div class="container-azul">
         <div>
+            <p class="titulo">Entrar</p>
+            <span>Faça login para ter acesso a muito mais!</span>
+
+            <!-- <span class="material-symbols-outlined">info</span> -->
             <p>Nome de usuário:</p>
             <input type="text" id="inp_nome">
 
             <p>Senha:</p>
             <input type="text" id="inp_senha">
 
-            <button onclick="entrar()">Entrar</button>
-            <button><a href="cadastro.html">Não tem cadastro ainda? Cadastre-se</a></button>
+            <div>
+                <button onclick="entrar()" class="entrar">Entrar</button>
+            </div>
+            
+            <button class="cadastre-se"><a href="cadastro.html">Não tem cadastro ainda? Cadastre-se</a></button>
 
             <div id="mensagem_erro"></div>
 
@@ -32,6 +48,7 @@
             <div id="cardErro"></div>
         </div>
     </div>
+    
 
 </body>
 

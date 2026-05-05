@@ -1,39 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
 
-    <script src="js/sessao.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+
+  <script src="js/sessao.js"></script>
+  <link rel="stylesheet" href="style/login.css">
+  <script src="js/sessao.js"></script>
+  <link rel="icon" href="assets/icon/icon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
+
 <body>
 
+  <div class="container-amarelo">
+
+    <img src="assets/icon/icon.png" alt="">
+
+  </div>
+
+  <div class="container-azul">
     <div>
-        <div>
-            <p>Nome de usuário:</p>
-            <input type="text" id="inp_nome">
+      <p class="titulo">Cadastrar-se</p>
+            <span>Faça o cadastro para ter acesso a muito mais!</span>
 
-            <p>Senha:</p>
-            <input type="text" id="inp_senha">
+      <p>Nome de usuário:</p>
+      <input type="text" id="inp_nome">
 
-            <p>Confirmar senha:</p>
-            <input type="text" id="inp_confirmar">
+      <p>Senha:</p>
+      <input type="text" id="inp_senha">
 
-            <button onclick="cadastrar()">Cadastrar-se</button>  
+      <p>Confirmar senha:</p>
+      <input type="text" id="inp_confirmar">
+      
+      <div>
+        <button onclick="cadastrar()" class="entrar">Cadastrar-se</button>
+      </div>
 
-            <div id="mensagem_erro"></div>
+      <div id="mensagem_erro"></div>
 
-            <div id="div_erros_login"></div>
+      <div id="div_erros_login"></div>
 
-            <div id="div_aguardar"></div>
+      <div id="div_aguardar"></div>
 
-            <div id="cardErro"></div>
-        </div>
+      <div id="cardErro"></div>
     </div>
-    
+  </div>
+
 </body>
+
 </html>
 
 <script>
