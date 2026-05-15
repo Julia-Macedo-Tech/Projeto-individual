@@ -66,6 +66,9 @@
                 <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
             </div>
             <div id="graficos">
+                <h3 class="tituloGraficos">
+                        <span>Últimas medidas de Temperatura e Umidade do</span>
+                    </h3>
             </div>
         </div>
     </div>
@@ -91,9 +94,6 @@
 
             document.getElementById("graficos").innerHTML += `
                 <div id="grafico${item.id}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloAquario${item.id_quiz}"></span>
-                    </h3>
                     <div class="graph">
                         <canvas id="myChartCanvas${item.id_quiz}"></canvas>
                     </div>
@@ -111,11 +111,11 @@
         }
     }
 
-    function alterarTitulo(id_quiz) {
-        var tituloAquario = document.getElementById(`tituloAquario${id_quiz}`)
-        // var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id_quiz == id_quiz).NOME_USUARIO;
-        tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + "</span>"
-    }
+    // function alterarTitulo(id_quiz) {
+    //     var tituloAquario = document.getElementById(`tituloAquario${id_quiz}`)
+    //     // var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id_quiz == id_quiz).NOME_USUARIO;
+    //     tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + "</span>"
+    // }
 
     function exibirAquario(id_quiz) {
         let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
@@ -162,7 +162,7 @@
     //     Para ajustar o "select", ajuste o comando sql em src/models
     function obterDadosGrafico(id_quiz) {
 
-        alterarTitulo(id_quiz)
+        // alterarTitulo(id_quiz)
 
         if (proximaAtualizacao != undefined) {
             clearTimeout(proximaAtualizacao);

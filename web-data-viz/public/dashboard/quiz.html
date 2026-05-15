@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo - Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body onload="onloadEsconder()">
+    <div id="pontuacaoEJogo">
+        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+            </div>
+            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                    <span id="spanPontuacaoFinal">***</span>
+                </span>
+                <span id="msgFinal" class="width-fit-content">***</span>
+            </div>
+        </div>
+
+        <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+            <div id="infoQuestao" class="padding-8">
+                <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
+                    questões.</span>
+            </div>
+
+            <div id="perguntaDaQuestaoAtual" class="padding-8">
+                <span id="spanQuestaoExibida" class="text-bold"></span>
+            </div>
+
+            <div id="infoAlternativas" class="padding-8">
+                <span><em>Escolha uma opção dentre as abaixo:</em></span>
+            </div>
+
+            <div id="opcoes" class="flex-colunar padding-8">
+                <span>
+                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                </span>
+                <span>
+                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                </span>
+                <span>
+                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                </span>
+                <span>
+                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                </span>
+            </div>
+
+            <div id="botoes" class="flex-colunar padding-8">
+                <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+    const listaDeQuestoesSerie = [
+        {
+            pergunta: "Qual é o nome do meio de Sheldon Cooper?",
+            alternativaA: "Lee",
+            alternativaB: "Lyndon",
+            alternativaC: "Leonard",
+            alternativaD: "Lester",
+            alternativaE: "Leakey",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Em qual universidade a maioria dos personagens masculinos trabalha?",
+            alternativaA: "MIT",
+            alternativaB: "Stanford",
+            alternativaC: "Caltech",
+            alternativaD: "Harvard",
+            alternativaE: "Princeton",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual é o instrumento que Sheldon toca ocasionalmente na série?",
+            alternativaA: "Violino",
+            alternativaB: "Piano",
+            alternativaC: "Harpa",
+            alternativaD: "Teremim",
+            alternativaE: "Clarinete",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            pergunta: "Qual é o estado de origem de Penny?",
+            alternativaA: "Kansas",
+            alternativaB: "Nebraska",
+            alternativaC: "Iowa",
+            alternativaD: "Oklahoma",
+            alternativaE: "Missouri",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual destes personagens é um engenheiro e, por muito tempo, foi o único do grupo sem um doutorado?",
+            alternativaA: "Leonard Hofstadter",
+            alternativaB: "Sheldon Cooper",
+            alternativaC: "Rajesh Koothrappali",
+            alternativaD: "Howard Wolowitz",
+            alternativaE: "Stuart Bloom",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            pergunta: "Qual é a profissão de Bernadette Rostenkowski-Wolowitz?",
+            alternativaA: "Neurobiologista",
+            alternativaB: "Microbiologista",
+            alternativaC: "Física experimental",
+            alternativaD: "Astrônoma",
+            alternativaE: "Farmacêutica",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual é a música que Sheldon pede para Penny cantar quando ele está doente?",
+            alternativaA: "Soft Kitty",
+            alternativaB: "Little Cat",
+            alternativaC: "Sleepy Tiger",
+            alternativaD: "Warm Kitty",
+            alternativaE: "Happy Puppy",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Qual é o apelido de astronauta que Howard recebeu no espaço?",
+            alternativaA: "Rocket Man",
+            alternativaB: "Froot Loops",
+            alternativaC: "Iron Man",
+            alternativaD: "Space Cowboy",
+            alternativaE: "Comet",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual é o nome do programa de internet que Sheldon e Amy apresentam juntos?",
+            alternativaA: "Science with Sheldon",
+            alternativaB: "Fun with Physics",
+            alternativaC: "Dr. Sheldon Cooper's Fun with Flags",
+            alternativaD: "The Vexillology Show",
+            alternativaE: "Flag Time",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual objeto de colecionador os quatro amigos compram juntos em um leilão online na 1ª temporada?",
+            alternativaA: "O anel do Frodo",
+            alternativaB: "O cinto de utilidades do Batman",
+            alternativaC: "Uma máquina do tempo (réplica)",
+            alternativaD: "Um sabre de luz original",
+            alternativaE: "O escudo do Capitão América",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual é o número do apartamento de Leonard e Sheldon?",
+            alternativaA: "3A",
+            alternativaB: "4A",
+            alternativaC: "4B",
+            alternativaD: "5A",
+            alternativaE: "2B",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual é o nome da loja de quadrinhos frequentada pelo grupo e quem é seu dono?",
+            alternativaA: "The Comic Center, dono Stuart",
+            alternativaB: "Nerd Haven, dono Stuart",
+            alternativaC: "Geek Paradise, dono Bert",
+            alternativaD: "Comic Book Central, dono Zack",
+            alternativaE: "Pasadena Comics, dono Bert",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Qual prêmio Sheldon e Amy ganham juntos no final da série?",
+            alternativaA: "Medalha Fields",
+            alternativaB: "Prêmio Nobel de Física",
+            alternativaC: "Prêmio Breakthrough",
+            alternativaD: "Prêmio Wolf",
+            alternativaE: "Medalha Nacional de Ciência",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Por que o elevador do prédio dos personagens ficou quebrado por quase toda a série?",
+            alternativaA: "Desgaste natural",
+            alternativaB: "Experimento de Howard com um foguete",
+            alternativaC: "Experimento de Leonard com combustível de foguete",
+            alternativaD: "Sheldon testando a gravidade",
+            alternativaE: "Peso excessivo de móveis da Penny",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual é o nome da cadela de estimação de Raj?",
+            alternativaA: "Cinnamon",
+            alternativaB: "Ginger",
+            alternativaC: "Pepper",
+            alternativaD: "Nutmeg",
+            alternativaE: "Cookie",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Qual ator de Star Trek era o 'inimigo mortal' de Sheldon antes de se tornarem amigos?",
+            alternativaA: "William Shatner",
+            alternativaB: "Leonard Nimoy",
+            alternativaC: "George Takei",
+            alternativaD: "Wil Wheaton",
+            alternativaE: "Brent Spiner",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            pergunta: "Quantas temporadas a série The Big Bang Theory teve no total?",
+            alternativaA: "10",
+            alternativaB: "11",
+            alternativaC: "12",
+            alternativaD: "13",
+            alternativaE: "15",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "O Contrato de Colegas de Quarto diz que, se um ganhar superpoderes, deve nomear o outro como:",
+            alternativaA: "Inimigo",
+            alternativaB: "Mestre",
+            alternativaC: "Ajudante (sidekick)",
+            alternativaD: "Suplente",
+            alternativaE: "Nêmesis",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual é a comida que o grupo come às quintas-feiras no cronograma de Sheldon?",
+            alternativaA: "Comida Chinesa",
+            alternativaB: "Noite da Pizza",
+            alternativaC: "Comida Tailandesa",
+            alternativaD: "Noite do Hambúrguer",
+            alternativaE: "Comida Grega",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Qual é o nome do jogo de cartas colecionáveis fictício que os rapazes jogam?",
+            alternativaA: "Magic: The Gathering",
+            alternativaB: "Mystic Warlords of Ka'a",
+            alternativaC: "Dungeons & Dragons",
+            alternativaD: "World of Warcraft",
+            alternativaE: "Age of Conan",
+            alternativaCorreta: "alternativaB"
+        }
+    ];
+
+
+    const listaDeQuestoesMatematica = [
+        {
+            pergunta: "Se a soma de dois números é 45 e a diferença entre eles é 9, qual é o maior?",
+            alternativaA: "18",
+            alternativaB: "23",
+            alternativaC: "27",
+            alternativaD: "36",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Um produto com 20% de desconto custa R$ 80,00. Qual era o valor original?",
+            alternativaA: "R$ 96,00",
+            alternativaB: "R$ 100,00",
+            alternativaC: "R$ 110,00",
+            alternativaD: "R$ 120,00",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Se 3 elevado a x é igual a 81 (3^x = 81), qual o valor de x?",
+            alternativaA: "2",
+            alternativaB: "3",
+            alternativaC: "4",
+            alternativaD: "5",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Em uma urna há 5 bolas azuis e 3 vermelhas. Qual a chance de tirar uma vermelha?",
+            alternativaA: "3/5",
+            alternativaB: "5/8",
+            alternativaC: "3/8",
+            alternativaD: "1/2",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Um triângulo retângulo tem catetos de 6cm e 8cm. Qual a hipotenusa?",
+            alternativaA: "9 cm",
+            alternativaB: "10 cm",
+            alternativaC: "12 cm",
+            alternativaD: "14 cm",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Quantos números ímpares existem entre 10 e 30?",
+            alternativaA: "9",
+            alternativaB: "10",
+            alternativaC: "11",
+            alternativaD: "12",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual a média aritmética dos números 12, 15, 18 e 27?",
+            alternativaA: "16",
+            alternativaB: "17",
+            alternativaC: "18",
+            alternativaD: "20",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Se um carro faz 12km com 1 litro, quanto gastará para percorrer 150km?",
+            alternativaA: "12L",
+            alternativaB: "12,5L",
+            alternativaC: "13L",
+            alternativaD: "14L",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Resolva a equação: 2x + 7 = 3x - 5. Qual o valor de x?",
+            alternativaA: "5",
+            alternativaB: "7",
+            alternativaC: "10",
+            alternativaD: "12",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            pergunta: "Qual a área de um círculo com raio de 3m? (Considere pi = 3,14)",
+            alternativaA: "9,42 m²",
+            alternativaB: "18,84 m²",
+            alternativaC: "28,26 m²",
+            alternativaD: "31,40 m²",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Se 4 máquinas produzem 800 peças, quantas 6 máquinas produzirão?",
+            alternativaA: "1000",
+            alternativaB: "1200",
+            alternativaC: "1400",
+            alternativaD: "1600",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual o resultado de √144 + √64?",
+            alternativaA: "18",
+            alternativaB: "20",
+            alternativaC: "22",
+            alternativaD: "24",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Escada de 5m encostada a 3m da parede. Qual a altura que ela atinge?",
+            alternativaA: "3,5m",
+            alternativaB: "4m",
+            alternativaC: "4,5m",
+            alternativaD: "4,8m",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Quanto é 2^0 + 2^1 + 2^2 + 2^3?",
+            alternativaA: "14",
+            alternativaB: "15",
+            alternativaC: "16",
+            alternativaD: "17",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Se o perímetro de um retângulo é 30cm e a largura é 5cm, qual o comprimento?",
+            alternativaA: "5 cm",
+            alternativaB: "10 cm",
+            alternativaC: "15 cm",
+            alternativaD: "20 cm",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Em um grupo de 50 pessoas, 60% gostam de futebol. Quantas NÃO gostam?",
+            alternativaA: "15",
+            alternativaB: "20",
+            alternativaC: "25",
+            alternativaD: "30",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Juros simples: R$ 1.000 a 2% ao mês. Qual o total após 3 meses?",
+            alternativaA: "R$ 1.040,00",
+            alternativaB: "R$ 1.060,00",
+            alternativaC: "R$ 1.080,00",
+            alternativaD: "R$ 1.100,00",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            pergunta: "Qual o valor da expressão (10 - 2 * 3)^2?",
+            alternativaA: "16",
+            alternativaB: "25",
+            alternativaC: "36",
+            alternativaD: "64",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            pergunta: "Um ângulo suplementar a 70° mede quanto?",
+            alternativaA: "20°",
+            alternativaB: "90°",
+            alternativaC: "110°",
+            alternativaD: "180°",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            pergunta: "Se x/4 = 9/6, qual o valor de x?",
+            alternativaA: "4",
+            alternativaB: "5",
+            alternativaC: "6",
+            alternativaD: "8",
+            alternativaCorreta: "alternativaC"
+        }
+    ];
+
+
+    const listaDeQuestoes = [
+
+        {
+            pergunta: "Qual mês tem 30 dias?",
+            alternativaA: "Janeiro",
+            alternativaB: "Dezembro",
+            alternativaC: "Junho",
+            alternativaD: "Agosto",
+            alternativaCorreta: "alternativaC"
+        },
+
+        {
+            pergunta: "Quantas horas tem em um dia?",
+            alternativaA: "30 horas",
+            alternativaB: "38 horas",
+            alternativaC: "48 horas",
+            alternativaD: "24 horas",
+            alternativaCorreta: "alternativaD"
+        },
+
+        {
+            pergunta: "Qual destes números é ímpar?",
+            alternativaA: "Dez",
+            alternativaB: "Doze",
+            alternativaC: "Oito",
+            alternativaD: "Onze",
+            alternativaCorreta: "alternativaD"
+        }
+
+    ]
+
+    // variáveis globais    
+    let numeroDaQuestaoAtual = 0
+    let pontuacaoFinal = 0
+    let pontuacaoFinalSerie = 0;
+    let pontuacaoFinalMatematica = 0;
+    let tentativaIncorreta = 0
+    let certas = 0
+    let erradas = 0
+    let quantidadeDeQuestoes = listaDeQuestoes.length
+    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
+
+    function onloadEsconder() {
+        document.getElementById('pontuacao').style.display = "none"
+        document.getElementById('jogo').style.display = "none"
+    }
+
+    function iniciarQuiz() {
+        document.getElementById('pontuacao').style.display = "flex"
+        document.getElementById('jogo').style.display = "flex"
+        document.getElementById('btnIniciarQuiz').style.display = "none"
+
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = true
+    }
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+    }
+
+    function submeter() {
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let hasChecked = false
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                hasChecked = true
+                break
+            }
+        }
+
+        if (!hasChecked) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.")
+        } else {
+            btnSubmeter.disabled = true
+            btnProx.disabled = false
+
+            habilitarAlternativas(false)
+
+            checarResposta()
+        }
+    }
+
+    function habilitarAlternativas(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcao.disabled = opcaoEscolhida
+        segundaOpcao.disabled = opcaoEscolhida
+        terceiraOpcao.disabled = opcaoEscolhida
+        quartaOpcao.disabled = opcaoEscolhida
+
+    }
+
+    function avancar() {
+        btnProx.disabled = true
+        btnSubmeter.disabled = false
+
+        desmarcarRadioButtons()
+
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
+    }
+
+    function tentarNovamente() {
+        // atualiza a página
+        window.location.reload()
+    }
+
+    function checarResposta() {
+        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
+        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+        options.forEach((option) => {
+            if (option.value === respostaQuestaoAtual) {
+                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                alternativaCorreta = option.labels[0].id
+            }
+        })
+
+        // verifica se resposta assinalada é correta
+        options.forEach((option) => {
+            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                pontuacaoFinal++
+                certas++
+                document.getElementById("spanCertas").innerHTML = certas
+                numeroDaQuestaoAtual++
+            } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                const wrongLabelId = option.labels[0].id
+
+                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                tentativaIncorreta++
+                erradas++
+                document.getElementById("spanErradas").innerHTML = erradas
+                numeroDaQuestaoAtual++
+            }
+        })
+    }
+
+    function limparCoresBackgroundOpcoes() {
+        const options = document.getElementsByName("option");
+        options.forEach((option) => {
+            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
+            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
+        })
+    }
+
+    function desmarcarRadioButtons() {
+        const options = document.getElementsByName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].checked = false;
+        }
+    }
+
+    function finalizarJogo() {
+        let textoParaMensagemFinal = null
+        let classComCoresParaMensagemFinal = null
+        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+
+        if (porcentagemFinalDeAcertos <= 0.3) {
+            textoParaMensagemFinal = "Parece que você não estudou..."
+            classComCoresParaMensagemFinal = "text-danger-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
+            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
+            classComCoresParaMensagemFinal = "text-warning-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos >= 0.9) {
+            textoParaMensagemFinal = "Uau, parabéns!"
+            classComCoresParaMensagemFinal = "text-success-with-bg"
+        }
+
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
+
+
+        document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
+        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
+        document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
+
+        document.getElementById('jogo').classList.add("text-new-gray")
+
+        btnProx.disabled = true
+        btnSubmeter.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = false
+
+    }
+</script>

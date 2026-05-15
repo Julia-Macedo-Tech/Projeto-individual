@@ -30,7 +30,13 @@ function autenticar(req, res) {
                                         aquarios: resultadoAquarios
                                     });
                                 } else {
-                                    res.status(204).json({ aquarios: [] });
+                                    //res.status(204).json({ aquarios: [] });
+                                    res.json({  
+                                        id_usuario: resultadoAutenticar[0].id_usuario,
+                                        nome: resultadoAutenticar[0].nome,
+                                        senha: resultadoAutenticar[0].senha,
+                                        aquarios: []
+                                    });
                                 }
                             })
                                
