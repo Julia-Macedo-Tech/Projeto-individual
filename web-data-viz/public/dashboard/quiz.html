@@ -5,70 +5,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="../style/style.css">
+    <script src="../js/sessao.js"></script>
+
 </head>
 
 
 <body onload="onloadEsconder()">
-    <div id="pontuacaoEJogo">
-        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+    <div id="pontuacaoEJogoSerie">
+        <button id="btnIniciarQuizSerie" onclick="iniciarQuizSerie()">INICIAR QUIZ</button>
 
-        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
-            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
-                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
-                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+        <div id="pontuacaoSerie" class="flex-colunar width-fit-content border-primary">
+            <div id="pontuacaoDuranteJogoSerie" class="flex-colunar padding-8">
+                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertasSerie"></span></span>
+                <span class="width-fit-content">Quantidade de erros: <span id="spanErradasSerie"></span></span>
             </div>
-            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
-                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
-                    <span id="spanPontuacaoFinal">***</span>
+            <div id="pontuacaoFinalJogoSerie" class="flex-colunar padding-8">
+                <span id="pontuacaoFinalSerie" class="width-fit-content">Pontuação Final:
+                    <span id="spanPontuacaoFinalSerie">***</span>
                 </span>
-                <span id="msgFinal" class="width-fit-content">***</span>
+                <span id="msgFinalSerie" class="width-fit-content">***</span>
             </div>
         </div>
 
-        <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+        <div id="jogoSerie" class="width-fit-content flex-colunar border-secondary">
 
-            <div id="infoQuestao" class="padding-8">
-                <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
+            <div id="infoQuestaoSerie" class="padding-8">
+                <span>Questão atual: <span id="spanNumeroDaQuestaoAtualSerie"></span> de <span
+                        id="qtdQuestoesSerie"></span>
                     questões.</span>
             </div>
 
-            <div id="perguntaDaQuestaoAtual" class="padding-8">
-                <span id="spanQuestaoExibida" class="text-bold"></span>
+            <div id="perguntaDaQuestaoAtualSerie" class="padding-8">
+                <span id="spanQuestaoExibidaSerie" class="text-bold"></span>
             </div>
 
-            <div id="infoAlternativas" class="padding-8">
+            <div id="infoAlternativasSerie" class="padding-8">
                 <span><em>Escolha uma opção dentre as abaixo:</em></span>
             </div>
 
-            <div id="opcoes" class="flex-colunar padding-8">
+            <div id="opcoesSerie" class="flex-colunar padding-8">
                 <span>
-                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
-                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                    <input type="radio" id="primeiraOpcaoSerie" name="optionSerie" class="radio" value="alternativaA" />
+                    <label for="primeiraOpcaoSerie" class="optionSerie" id="labelOpcaoUmSerie"></label>
                 </span>
                 <span>
-                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
-                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                    <input type="radio" id="segundaOpcaoSerie" name="optionSerie" class="radio" value="alternativaB" />
+                    <label for="segundaOpcaoSerie" class="optionSerie" id="labelOpcaoDoisSerie"></label>
                 </span>
                 <span>
-                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
-                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                    <input type="radio" id="terceiraOpcaoSerie" name="optionSerie" class="radio" value="alternativaC" />
+                    <label for="terceiraOpcaoSerie" class="optionSerie" id="labelOpcaoTresSerie"></label>
                 </span>
                 <span>
-                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
-                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                    <input type="radio" id="quartaOpcaoSerie" name="optionSerie" class="radio" value="alternativaD" />
+                    <label for="quartaOpcaoSerie" class="optionSerie" id="labelOpcaoQuatroSerie"></label>
                 </span>
             </div>
 
-            <div id="botoes" class="flex-colunar padding-8">
-                <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+            <div id="botoesSerie" class="flex-colunar padding-8">
+                <button onclick="submeterSerie()" id="btnSubmeterSerie">Submeter resposta</button>
+                <button onclick="avancarSerie()" id="btnProxSerie" disabled>Avançar para próxima questão</button>
                 <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-                <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
+                <button onclick="tentarNovamenteSerie()" id="btnTentarNovamenteSerie" disabled>Tentar novamente</button>
             </div>
 
         </div>
     </div>
+
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div id="pontuacaoEJogoMatematica">
+        <button id="btnIniciarQuizMatematica" onclick="iniciarQuizMatematica()">INICIAR QUIZ MATEMÁTICA</button>
+
+        <div id="pontuacaoMatematica" class="flex-colunar width-fit-content border-primary">
+            <div id="pontuacaoDuranteJogoMatematica" class="flex-colunar padding-8">
+                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertasMatematica"></span></span>
+                <span class="width-fit-content">Quantidade de erros: <span id="spanErradasMatematica"></span></span>
+            </div>
+            <div id="pontuacaoFinalJogoMatematica" class="flex-colunar padding-8">
+                <span id="pontuacaoFinalMatematica" class="width-fit-content">Pontuação Final:
+                    <span id="spanPontuacaoFinalMatematica">***</span>
+                </span>
+                <span id="msgFinalMatematica" class="width-fit-content">***</span>
+            </div>
+        </div>
+
+        <div id="jogoMatematica" class="width-fit-content flex-colunar border-secondary">
+
+            <div id="infoQuestaoMatematica" class="padding-8">
+                <span>Questão atual: <span id="spanNumeroDaQuestaoAtualMatematica"></span> de <span
+                        id="qtdQuestoesMatematica"></span>
+                    questões.</span>
+            </div>
+
+            <div id="perguntaDaQuestaoAtualMatematica" class="padding-8">
+                <span id="spanQuestaoExibidaMatematica" class="text-bold"></span>
+            </div>
+
+            <div id="infoAlternativasMatematica" class="padding-8">
+                <span><em>Escolha uma opção dentre as abaixo:</em></span>
+            </div>
+
+            <div id="opcoesMatematica" class="flex-colunar padding-8">
+                <span>
+                    <input type="radio" id="primeiraOpcaoMatematica" name="optionMatematica" class="radio"
+                        value="alternativaA" />
+                    <label for="primeiraOpcaoMatematica" class="optionMatematica" id="labelOpcaoUmMatematica"></label>
+                </span>
+                <span>
+                    <input type="radio" id="segundaOpcaoMatematica" name="optionMatematica" class="radio"
+                        value="alternativaB" />
+                    <label for="segundaOpcaoMatematica" class="optionMatematica" id="labelOpcaoDoisMatematica"></label>
+                </span>
+                <span>
+                    <input type="radio" id="terceiraOpcaoMatematica" name="optionMatematica" class="radio"
+                        value="alternativaC" />
+                    <label for="terceiraOpcaoMatematica" class="optionMatematica" id="labelOpcaoTresMatematica"></label>
+                </span>
+                <span>
+                    <input type="radio" id="quartaOpcaoMatematica" name="optionMatematica" class="radio"
+                        value="alternativaD" />
+                    <label for="quartaOpcaoMatematica" class="optionMatematica" id="labelOpcaoQuatroMatematica"></label>
+                </span>
+            </div>
+
+            <div id="botoesMatematica" class="flex-colunar padding-8">
+                <button onclick="submeterMatematica()" id="btnSubmeterMatematica">Submeter resposta</button>
+                <button onclick="avancarMatematica()" id="btnProxMatematica" disabled>Avançar para próxima
+                    questão</button>
+                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                <button onclick="tentarNovamenteMatematica()" id="btnTentarNovamenteMatematica" disabled>Tentar
+                    novamente</button>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 
 </html>
@@ -81,7 +156,6 @@
             alternativaB: "Lyndon",
             alternativaC: "Leonard",
             alternativaD: "Lester",
-            alternativaE: "Leakey",
             alternativaCorreta: "alternativaA"
         },
         {
@@ -90,7 +164,6 @@
             alternativaB: "Stanford",
             alternativaC: "Caltech",
             alternativaD: "Harvard",
-            alternativaE: "Princeton",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -99,7 +172,6 @@
             alternativaB: "Piano",
             alternativaC: "Harpa",
             alternativaD: "Teremim",
-            alternativaE: "Clarinete",
             alternativaCorreta: "alternativaD"
         },
         {
@@ -108,7 +180,6 @@
             alternativaB: "Nebraska",
             alternativaC: "Iowa",
             alternativaD: "Oklahoma",
-            alternativaE: "Missouri",
             alternativaCorreta: "alternativaB"
         },
         {
@@ -117,7 +188,6 @@
             alternativaB: "Sheldon Cooper",
             alternativaC: "Rajesh Koothrappali",
             alternativaD: "Howard Wolowitz",
-            alternativaE: "Stuart Bloom",
             alternativaCorreta: "alternativaD"
         },
         {
@@ -126,7 +196,6 @@
             alternativaB: "Microbiologista",
             alternativaC: "Física experimental",
             alternativaD: "Astrônoma",
-            alternativaE: "Farmacêutica",
             alternativaCorreta: "alternativaB"
         },
         {
@@ -135,7 +204,6 @@
             alternativaB: "Little Cat",
             alternativaC: "Sleepy Tiger",
             alternativaD: "Warm Kitty",
-            alternativaE: "Happy Puppy",
             alternativaCorreta: "alternativaA"
         },
         {
@@ -144,7 +212,6 @@
             alternativaB: "Froot Loops",
             alternativaC: "Iron Man",
             alternativaD: "Space Cowboy",
-            alternativaE: "Comet",
             alternativaCorreta: "alternativaB"
         },
         {
@@ -153,7 +220,6 @@
             alternativaB: "Fun with Physics",
             alternativaC: "Dr. Sheldon Cooper's Fun with Flags",
             alternativaD: "The Vexillology Show",
-            alternativaE: "Flag Time",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -162,7 +228,6 @@
             alternativaB: "O cinto de utilidades do Batman",
             alternativaC: "Uma máquina do tempo (réplica)",
             alternativaD: "Um sabre de luz original",
-            alternativaE: "O escudo do Capitão América",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -171,7 +236,6 @@
             alternativaB: "4A",
             alternativaC: "4B",
             alternativaD: "5A",
-            alternativaE: "2B",
             alternativaCorreta: "alternativaB"
         },
         {
@@ -180,7 +244,6 @@
             alternativaB: "Nerd Haven, dono Stuart",
             alternativaC: "Geek Paradise, dono Bert",
             alternativaD: "Comic Book Central, dono Zack",
-            alternativaE: "Pasadena Comics, dono Bert",
             alternativaCorreta: "alternativaA"
         },
         {
@@ -189,7 +252,6 @@
             alternativaB: "Prêmio Nobel de Física",
             alternativaC: "Prêmio Breakthrough",
             alternativaD: "Prêmio Wolf",
-            alternativaE: "Medalha Nacional de Ciência",
             alternativaCorreta: "alternativaB"
         },
         {
@@ -198,7 +260,6 @@
             alternativaB: "Experimento de Howard com um foguete",
             alternativaC: "Experimento de Leonard com combustível de foguete",
             alternativaD: "Sheldon testando a gravidade",
-            alternativaE: "Peso excessivo de móveis da Penny",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -207,7 +268,6 @@
             alternativaB: "Ginger",
             alternativaC: "Pepper",
             alternativaD: "Nutmeg",
-            alternativaE: "Cookie",
             alternativaCorreta: "alternativaA"
         },
         {
@@ -216,7 +276,6 @@
             alternativaB: "Leonard Nimoy",
             alternativaC: "George Takei",
             alternativaD: "Wil Wheaton",
-            alternativaE: "Brent Spiner",
             alternativaCorreta: "alternativaD"
         },
         {
@@ -225,7 +284,6 @@
             alternativaB: "11",
             alternativaC: "12",
             alternativaD: "13",
-            alternativaE: "15",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -234,7 +292,6 @@
             alternativaB: "Mestre",
             alternativaC: "Ajudante (sidekick)",
             alternativaD: "Suplente",
-            alternativaE: "Nêmesis",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -243,7 +300,6 @@
             alternativaB: "Noite da Pizza",
             alternativaC: "Comida Tailandesa",
             alternativaD: "Noite do Hambúrguer",
-            alternativaE: "Comida Grega",
             alternativaCorreta: "alternativaC"
         },
         {
@@ -252,10 +308,10 @@
             alternativaB: "Mystic Warlords of Ka'a",
             alternativaC: "Dungeons & Dragons",
             alternativaD: "World of Warcraft",
-            alternativaE: "Age of Conan",
             alternativaCorreta: "alternativaB"
         }
     ];
+
 
 
     const listaDeQuestoesMatematica = [
@@ -421,89 +477,56 @@
         }
     ];
 
-
-    const listaDeQuestoes = [
-
-        {
-            pergunta: "Qual mês tem 30 dias?",
-            alternativaA: "Janeiro",
-            alternativaB: "Dezembro",
-            alternativaC: "Junho",
-            alternativaD: "Agosto",
-            alternativaCorreta: "alternativaC"
-        },
-
-        {
-            pergunta: "Quantas horas tem em um dia?",
-            alternativaA: "30 horas",
-            alternativaB: "38 horas",
-            alternativaC: "48 horas",
-            alternativaD: "24 horas",
-            alternativaCorreta: "alternativaD"
-        },
-
-        {
-            pergunta: "Qual destes números é ímpar?",
-            alternativaA: "Dez",
-            alternativaB: "Doze",
-            alternativaC: "Oito",
-            alternativaD: "Onze",
-            alternativaCorreta: "alternativaD"
-        }
-
-    ]
-
     // variáveis globais    
-    let numeroDaQuestaoAtual = 0
-    let pontuacaoFinal = 0
+    let numeroDaQuestaoAtualSerie = 0
     let pontuacaoFinalSerie = 0;
-    let pontuacaoFinalMatematica = 0;
-    let tentativaIncorreta = 0
-    let certas = 0
-    let erradas = 0
-    let quantidadeDeQuestoes = listaDeQuestoes.length
+    let certasSerie = 0
+    let quantidadeDeQuestoesSerie = listaDeQuestoesSerie.length
     // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
-        document.getElementById('pontuacao').style.display = "none"
-        document.getElementById('jogo').style.display = "none"
+        document.getElementById('pontuacaoSerie').style.display = "none"
+        document.getElementById('jogoSerie').style.display = "none"
+        document.getElementById('pontuacaoMatematica').style.display = "none"
+        document.getElementById('jogoMatematica').style.display = "none"
+        document.getElementById('btnIniciarQuizMatematica').style.display = "none"
     }
 
-    function iniciarQuiz() {
-        document.getElementById('pontuacao').style.display = "flex"
-        document.getElementById('jogo').style.display = "flex"
-        document.getElementById('btnIniciarQuiz').style.display = "none"
+    function iniciarQuizSerie() {
+        document.getElementById('pontuacaoSerie').style.display = "flex"
+        document.getElementById('jogoSerie').style.display = "flex"
+        document.getElementById('btnIniciarQuizSerie').style.display = "none"
 
-        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+        document.getElementById('qtdQuestoesSerie').innerHTML = quantidadeDeQuestoesSerie
 
-        preencherHTMLcomQuestaoAtual(0)
+        preencherHTMLcomQuestaoAtualSerie(0)
 
-        btnSubmeter.disabled = false
-        btnProx.disabled = true
+        btnSubmeterSerie.disabled = false
+        btnProxSerie.disabled = true
         // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = true
+        btnTentarNovamenteSerie.disabled = true
     }
 
-    function preencherHTMLcomQuestaoAtual(index) {
-        habilitarAlternativas(true)
-        const questaoAtual = listaDeQuestoes[index]
-        numeroDaQuestaoAtual = index
-        console.log("questaoAtual")
-        console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
-        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
-        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
-        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
-        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+    function preencherHTMLcomQuestaoAtualSerie(index) {
+        habilitarAlternativasSerie(true)
+        const questaoAtualSerie = listaDeQuestoesSerie[index]
+        numeroDaQuestaoAtualSerie = index
+        console.log("questaoAtualSerie")
+        console.log(questaoAtualSerie)
+        document.getElementById("spanNumeroDaQuestaoAtualSerie").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibidaSerie").innerHTML = questaoAtualSerie.pergunta;
+        document.getElementById("labelOpcaoUmSerie").innerHTML = questaoAtualSerie.alternativaA;
+        document.getElementById("labelOpcaoDoisSerie").innerHTML = questaoAtualSerie.alternativaB;
+        document.getElementById("labelOpcaoTresSerie").innerHTML = questaoAtualSerie.alternativaC;
+        document.getElementById("labelOpcaoQuatroSerie").innerHTML = questaoAtualSerie.alternativaD;
     }
 
-    function submeter() {
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+    function submeterSerie() {
+        const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
 
         let hasChecked = false
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].checked) {
+        for (let i = 0; i < optionsSerie.length; i++) {
+            if (optionsSerie[i].checked) {
                 hasChecked = true
                 break
             }
@@ -512,56 +535,56 @@
         if (!hasChecked) {
             alert("Não há alternativas escolhidas. Escolha uma opção.")
         } else {
-            btnSubmeter.disabled = true
-            btnProx.disabled = false
+            btnSubmeterSerie.disabled = true
+            btnProxSerie.disabled = false
 
-            habilitarAlternativas(false)
+            habilitarAlternativasSerie(false)
 
-            checarResposta()
+            checarRespostaSerie()
         }
     }
 
-    function habilitarAlternativas(trueOrFalse) {
+    function habilitarAlternativasSerie(trueOrFalse) {
         let opcaoEscolhida = trueOrFalse ? false : true
 
-        primeiraOpcao.disabled = opcaoEscolhida
-        segundaOpcao.disabled = opcaoEscolhida
-        terceiraOpcao.disabled = opcaoEscolhida
-        quartaOpcao.disabled = opcaoEscolhida
+        primeiraOpcaoSerie.disabled = opcaoEscolhida
+        segundaOpcaoSerie.disabled = opcaoEscolhida
+        terceiraOpcaoSerie.disabled = opcaoEscolhida
+        quartaOpcaoSerie.disabled = opcaoEscolhida
 
     }
 
-    function avancar() {
-        btnProx.disabled = true
-        btnSubmeter.disabled = false
+    function avancarSerie() {
+        btnProxSerie.disabled = true
+        btnSubmeterSerie.disabled = false
 
-        desmarcarRadioButtons()
+        desmarcarRadioButtonsSerie()
 
-        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+        if (numeroDaQuestaoAtualSerie < quantidadeDeQuestoesSerie - 1) {
+            preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+        } else if (numeroDaQuestaoAtualSerie == quantidadeDeQuestoesSerie - 1) {
             alert("Atenção... a próxima é a ultima questão!")
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+            preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
         } else {
-            finalizarJogo()
+            finalizarJogoSerie()
         }
-        limparCoresBackgroundOpcoes()
+        limparCoresBackgroundOpcoesSerie()
     }
 
-    function tentarNovamente() {
+    function tentarNovamenteSerie() {
         // atualiza a página
         window.location.reload()
     }
 
-    function checarResposta() {
-        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
+    function checarRespostaSerie() {
+        const questaoAtual = listaDeQuestoesSerie[numeroDaQuestaoAtualSerie] // questão atual 
         const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
 
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+        const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
 
         let alternativaCorreta = null // variável para armazenar a alternativa correta
 
-        options.forEach((option) => {
+        optionsSerie.forEach((option) => {
             if (option.value === respostaQuestaoAtual) {
                 console.log("alternativaCorreta está no componente: " + alternativaCorreta)
                 alternativaCorreta = option.labels[0].id
@@ -569,72 +592,294 @@
         })
 
         // verifica se resposta assinalada é correta
-        options.forEach((option) => {
+        optionsSerie.forEach((option) => {
             if (option.checked === true && option.value === respostaQuestaoAtual) {
                 document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                pontuacaoFinal++
-                certas++
-                document.getElementById("spanCertas").innerHTML = certas
-                numeroDaQuestaoAtual++
+                pontuacaoFinalSerie++
+                certasSerie++
+                document.getElementById("spanCertasSerie").innerHTML = certasSerie
+                numeroDaQuestaoAtualSerie++
             } else if (option.checked && option.value !== respostaQuestaoAtual) {
                 const wrongLabelId = option.labels[0].id
 
                 document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
                 document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                tentativaIncorreta++
-                erradas++
-                document.getElementById("spanErradas").innerHTML = erradas
-                numeroDaQuestaoAtual++
+                numeroDaQuestaoAtualSerie++
             }
         })
     }
 
-    function limparCoresBackgroundOpcoes() {
-        const options = document.getElementsByName("option");
-        options.forEach((option) => {
+    function limparCoresBackgroundOpcoesSerie() {
+        const optionsSerie = document.getElementsByName("optionSerie");
+        optionsSerie.forEach((option) => {
             document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
             document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
         })
     }
 
-    function desmarcarRadioButtons() {
-        const options = document.getElementsByName("option");
-        for (let i = 0; i < options.length; i++) {
-            options[i].checked = false;
+    function desmarcarRadioButtonsSerie() {
+        const optionsSerie = document.getElementsByName("optionSerie");
+        for (let i = 0; i < optionsSerie.length; i++) {
+            optionsSerie[i].checked = false;
         }
     }
 
-    function finalizarJogo() {
-        let textoParaMensagemFinal = null
-        let classComCoresParaMensagemFinal = null
-        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+    function finalizarJogoSerie() {
+        let textoParaMensagemFinalSerie = null
+        let classComCoresParaMensagemFinalSerie = null
+        const porcentagemFinalDeAcertosSerie = pontuacaoFinalSerie / quantidadeDeQuestoesSerie
 
-        if (porcentagemFinalDeAcertos <= 0.3) {
-            textoParaMensagemFinal = "Parece que você não estudou..."
-            classComCoresParaMensagemFinal = "text-danger-with-bg"
+        if (porcentagemFinalDeAcertosSerie <= 0.3) {
+            textoParaMensagemFinalSerie = "Parece que você não estudou..."
+            classComCoresParaMensagemFinalSerie = "text-danger-with-bg"
         }
-        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
-            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
-            classComCoresParaMensagemFinal = "text-warning-with-bg"
+        else if (porcentagemFinalDeAcertosSerie > 0.3 && porcentagemFinalDeAcertosSerie < 0.9) {
+            textoParaMensagemFinalSerie = "Pode melhorar na próxima, hein!"
+            classComCoresParaMensagemFinalSerie = "text-warning-with-bg"
         }
-        else if (porcentagemFinalDeAcertos >= 0.9) {
-            textoParaMensagemFinal = "Uau, parabéns!"
-            classComCoresParaMensagemFinal = "text-success-with-bg"
+        else if (porcentagemFinalDeAcertosSerie >= 0.9) {
+            textoParaMensagemFinalSerie = "Uau, parabéns!"
+            classComCoresParaMensagemFinalSerie = "text-success-with-bg"
         }
 
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
+        textoParaMensagemFinalSerie += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosSerie) * 100) + "% das questões da série."
 
 
-        document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
-        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
-        document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
+        document.getElementById('msgFinalSerie').innerHTML = textoParaMensagemFinalSerie
+        document.getElementById('msgFinalSerie').classList.add(classComCoresParaMensagemFinalSerie)
+        document.getElementById('spanPontuacaoFinalSerie').innerHTML = pontuacaoFinalSerie
 
-        document.getElementById('jogo').classList.add("text-new-gray")
+        document.getElementById('jogoSerie').classList.add("text-new-gray")
 
-        btnProx.disabled = true
-        btnSubmeter.disabled = true
+        document.getElementById('btnIniciarQuizMatematica').style.display = "flex"
+
+        btnProxSerie.disabled = true
+        btnSubmeterSerie.disabled = true
         // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = false
+        btnTentarNovamenteSerie.disabled = false
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // variáveis globais    
+    let numeroDaQuestaoAtualMatematica = 0
+    let pontuacaoFinalMatematica = 0;
+    let certasMatematica = 0
+    let quantidadeDeQuestoesMatematica = listaDeQuestoesMatematica.length
+    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
+
+    function iniciarQuizMatematica() {
+        document.getElementById('pontuacaoMatematica').style.display = "flex"
+        document.getElementById('jogoMatematica').style.display = "flex"
+        document.getElementById('pontuacaoSerie').style.display = "none"
+        document.getElementById('jogoSerie').style.display = "none"
+        document.getElementById('btnIniciarQuizMatematica').style.display = "none"
+
+        document.getElementById('qtdQuestoesMatematica').innerHTML = quantidadeDeQuestoesMatematica
+
+        preencherHTMLcomQuestaoAtualMatematica(0)
+
+        btnSubmeterMatematica.disabled = false
+        btnProxMatematica.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamenteMatematica.disabled = true
+    }
+
+    function preencherHTMLcomQuestaoAtualMatematica(index) {
+        habilitarAlternativasMatematica(true)
+        const questaoAtualMatematica = listaDeQuestoesMatematica[index]
+        numeroDaQuestaoAtualMatematica = index
+        console.log("questaoAtualMatematica")
+        console.log(questaoAtualMatematica)
+        document.getElementById("spanNumeroDaQuestaoAtualMatematica").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibidaMatematica").innerHTML = questaoAtualMatematica.pergunta;
+        document.getElementById("labelOpcaoUmMatematica").innerHTML = questaoAtualMatematica.alternativaA;
+        document.getElementById("labelOpcaoDoisMatematica").innerHTML = questaoAtualMatematica.alternativaB;
+        document.getElementById("labelOpcaoTresMatematica").innerHTML = questaoAtualMatematica.alternativaC;
+        document.getElementById("labelOpcaoQuatroMatematica").innerHTML = questaoAtualMatematica.alternativaD;
+    }
+
+    function submeterMatematica() {
+        const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
+
+        let hasChecked = false
+        for (let i = 0; i < optionsMatematica.length; i++) {
+            if (optionsMatematica[i].checked) {
+                hasChecked = true
+                break
+            }
+        }
+
+        if (!hasChecked) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.")
+        } else {
+            btnSubmeterMatematica.disabled = true
+            btnProxMatematica.disabled = false
+
+            habilitarAlternativasMatematica(false)
+
+            checarRespostaMatematica()
+        }
+    }
+
+    function habilitarAlternativasMatematica(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcaoMatematica.disabled = opcaoEscolhida
+        segundaOpcaoMatematica.disabled = opcaoEscolhida
+        terceiraOpcaoMatematica.disabled = opcaoEscolhida
+        quartaOpcaoMatematica.disabled = opcaoEscolhida
 
     }
+
+    function avancarMatematica() {
+        btnProxMatematica.disabled = true
+        btnSubmeterMatematica.disabled = false
+
+        desmarcarRadioButtonsMatematica()
+
+        if (numeroDaQuestaoAtualMatematica < quantidadeDeQuestoesMatematica - 1) {
+            preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+        } else if (numeroDaQuestaoAtualMatematica == quantidadeDeQuestoesMatematica - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+        } else {
+            finalizarJogoMatematica()
+        }
+        limparCoresBackgroundOpcoesMatematica()
+    }
+
+    function tentarNovamenteMatematica() {
+
+        cadastrar();
+    }
+
+    function checarRespostaMatematica() {
+        const questaoAtual = listaDeQuestoesMatematica[numeroDaQuestaoAtualMatematica] // questão atual 
+        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+        const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
+
+        let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+        optionsMatematica.forEach((option) => {
+            if (option.value === respostaQuestaoAtual) {
+                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                alternativaCorreta = option.labels[0].id
+            }
+        })
+
+        // verifica se resposta assinalada é correta
+        optionsMatematica.forEach((option) => {
+            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                pontuacaoFinalMatematica++
+                certasMatematica++
+                document.getElementById("spanCertasMatematica").innerHTML = certasMatematica
+                numeroDaQuestaoAtualMatematica++
+            } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                const wrongLabelId = option.labels[0].id
+
+                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                numeroDaQuestaoAtualMatematica++
+            }
+        })
+    }
+
+    function limparCoresBackgroundOpcoesMatematica() {
+        const optionsMatematica = document.getElementsByName("optionMatematica");
+        optionsMatematica.forEach((option) => {
+            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
+            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
+        })
+    }
+
+    function desmarcarRadioButtonsMatematica() {
+        const optionsMatematica = document.getElementsByName("optionMatematica");
+        for (let i = 0; i < optionsMatematica.length; i++) {
+            optionsMatematica[i].checked = false;
+        }
+    }
+
+    function finalizarJogoMatematica() {
+        let textoParaMensagemFinalMatematica = null
+        let classComCoresParaMensagemFinalMatematica = null
+        const porcentagemFinalDeAcertosMatematica = pontuacaoFinalMatematica / quantidadeDeQuestoesMatematica
+
+        if (porcentagemFinalDeAcertosMatematica <= 0.3) {
+            textoParaMensagemFinalMatematica = "Parece que você não estudou..."
+            classComCoresParaMensagemFinalMatematica = "text-danger-with-bg"
+        }
+        else if (porcentagemFinalDeAcertosMatematica > 0.3 && porcentagemFinalDeAcertosMatematica < 0.9) {
+            textoParaMensagemFinalMatematica = "Pode melhorar na próxima, hein!"
+            classComCoresParaMensagemFinalMatematica = "text-warning-with-bg"
+        }
+        else if (porcentagemFinalDeAcertosMatematica >= 0.9) {
+            textoParaMensagemFinalMatematica = "Uau, parabéns!"
+            classComCoresParaMensagemFinalMatematica = "text-success-with-bg"
+        }
+
+        textoParaMensagemFinalMatematica += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosMatematica) * 100) + "% das questões de matemática."
+
+
+        document.getElementById('msgFinalMatematica').innerHTML = textoParaMensagemFinalMatematica
+        document.getElementById('msgFinalMatematica').classList.add(classComCoresParaMensagemFinalMatematica)
+        document.getElementById('spanPontuacaoFinalMatematica').innerHTML = pontuacaoFinalMatematica
+
+        document.getElementById('jogoMatematica').classList.add("text-new-gray")
+
+        btnProxMatematica.disabled = true
+        btnSubmeterMatematica.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamenteMatematica.disabled = false
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function cadastrar() {
+
+        let id_usuario = sessionStorage.ID_USUARIO;
+
+        console.log(id_usuario)
+
+        // Enviando o valor da nova input
+        fetch("/quiz/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                certasSerieServer: certasSerie,
+                certasMatematicaServer: certasMatematica,
+                id_usuarioServer: id_usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("block");
+
+                    console.log
+                        ("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+
+                    setTimeout(() => {
+                        window.location = "dashboard.html";
+                    }, "2000");
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+
 </script>

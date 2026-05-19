@@ -1,5 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
+var aquarioModel = require("../models/quizModel");
 
 function autenticar(req, res) {
     var nome = req.body.nomeServer;

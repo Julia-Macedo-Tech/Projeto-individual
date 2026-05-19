@@ -10,6 +10,7 @@
 
     <script src="../js/sessao.js"></script>
     <script src="./../js/alerta.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -27,50 +28,49 @@
 
 <body>
 
-    <div class="janela">
-        <div class="header-left">
+    <div class="header">
+        <div class="container">
+            <p class="titulo">BBT</p>
+            <ul class="navbar">
+                <li>
+                    <a href="#sobre">Sobre</a>
+                </li>
+                <li>
+                    <a href="#cientistas">Cientistas</a>
+                </li>
+                <li>
+                    <a href="#curiosidades">Curiosidades</a>
+                </li>
+                <li>
+                    <a href="#">Matemática</a>
+                </li>
+                <li>
+                    <a href="quiz.html">Quiz</a>
+                </li>
+                <li>
+                    <a href="login.html"><button>Login!</button></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-            <div class="hello">
-                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-            </div>
+    <div class="hello">
+        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+    </div>
 
-            <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>Aquários</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav">
-
-                <h3>Gráficos</h3>
-
-            </div>
-
-            <div class="btn-nav-white">
-                <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
-                </a>
-            </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <h3>Sair</h3>
-            </div>
-
+    <div class="dash">
+        <div id="alerta">
         </div>
 
-        <div class="dash">
-            <div id="alerta">
-            </div>
-
-            <div class="btns-dash" id="btnAquario">
-                <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
-            </div>
-            <div id="graficos">
-                <h3 class="tituloGraficos">
-                        <span>Últimas medidas de Temperatura e Umidade do</span>
-                    </h3>
-            </div>
+        <div class="btns-dash" id="btnAquario">
+            <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
         </div>
+        <div id="graficos">
+            <h3 class="tituloGraficos">
+                <span>Últimas medidas de Temperatura e Umidade do</span>
+            </h3>
+        </div>
+    </div>
     </div>
 
 
