@@ -2,15 +2,17 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Dashboards</title>
+    <title>BBT | Dashboards</title>
 
     <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/dashboar.css">
+    <link rel="icon" href="../assets/icon/icon.ico">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -28,35 +30,50 @@
 
 <body>
 
-    <div class="header">
-        <div class="container">
-            <p class="titulo">BBT</p>
-            <ul class="navbar">
-                <li>
-                    <a href="#sobre">Sobre</a>
-                </li>
-                <li>
-                    <a href="#cientistas">Cientistas</a>
-                </li>
-                <li>
-                    <a href="#curiosidades">Curiosidades</a>
-                </li>
-                <li>
-                    <a href="#">Matemática</a>
-                </li>
-                <li>
-                    <a href="quiz.html">Quiz</a>
-                </li>
-                <li>
-                    <a href="login.html"><button>Login!</button></a>
-                </li>
+    <div class="sidebar">
+        <div>
+            <div class="logoSide">
+                <img src="../assets/img/broto.png">
+                <h1>Collect Tech</h1>
+                <p>Smart City Solution</p>
+                <div class="linha"></div>
+            </div>
+            <ul class="menu">
+                <a href="./dashboard.html">
+                    <li class="ativo">Geral</li>
+                </a>
+                <a href="./dashboard-pg2.html">
+                    <li>Lixeiras</li>
+                </a>
+                <a href="./rotas.html">
+                    <li>Rotas</li>
+                </a>
+                <a href="../cadastro.html">
+                    <li>Cadastrar Usuário</li>
+                </a>
+                <a href="./gerenciarUsuario.html">
+                    <li>Gerenciar Usuário</li>
+                </a>
             </ul>
+        </div>
+
+        <div class="hello">
+            <img src="../assets/img/1.png" alt="">
+            <span id="b_usuario">usuário</span>
+        </div>
+
+        <div id="sair">
+            <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
+            <dialog id="popup"
+                style="width: 250px; height: 250px; resize: none; border: 1px solid #ccc; padding: 20px;">
+                <p>aaaa</p>
+                <button onclick="popup.close()">Fechar</button>
+            </dialog>
+            <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
         </div>
     </div>
 
-    <div class="hello">
-        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
-    </div>
+
 
     <div class="dash">
         <div id="alerta">
