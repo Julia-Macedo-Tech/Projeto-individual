@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../style/jogo.css">
+    <link rel="icon" href="../assets/icon/icon.ico">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body onload="onloadEsconder()">
+
+    <div class="sidebar">
+        <div>
+            <div class="logoSide">
+                <img src="../assets/icon/icon.png">
+                <h1>Big Bang Theory</h1>
+                <p>Smart City Solution</p>
+                <div class="linha"></div>
+            </div>
+            <ul class="menu">
+                <a href="jogo.html">
+                    <li class="ativo">Jogo</li>
+                </a>
+                <a href="quiz.html">
+                    <li>Quiz</li>
+                </a>
+                <a href="dashboard.html">
+                    <li>Estatistícas</li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="hello">
+            <img src="../assets/img/sem_foto.png" alt="">
+            <span id="b_usuario">usuário</span>
+        </div>
+
+        <div id="sair">
+            <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
+            <dialog id="popup"
+                style="width: 250px; height: 250px; resize: none; border: 1px solid #ccc; padding: 20px;">
+                <p>aaaa</p>
+                <button onclick="popup.close()">Fechar</button>
+            </dialog>
+            <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
+        </div>
+    </div>
+
+    <div id="tudo-jogo">
+
+        <div id="regras">
+            <button onclick="popupRegras.showModal()"><span class="material-icons">info</span></button>
+            <dialog id="popupRegras"
+                style="width: 250px; height: 250px; resize: none; border: 1px solid #ccc; padding: 20px;">
+                <p>aaaa</p>
+                <button onclick="popupRegras.close()">Fechar</button>
+            </dialog>
+        </div>
+
+        <div id="btniniciar">
+            <button onclick="iniciar()">Iniciar jogo</button>
+        </div>
+
+        <div id="escolher">
+            <p>Escolher carta:</p>
+            <button id="pedra" onclick="carta(`pedra`)">
+                <img src="../assets/img/pedra.png" alt="Pedra">
+            </button>
+
+            <button id="papel" onclick="carta(`papel`)">
+                <img src="../assets/img/papel.png" alt="Papel">
+            </button>
+
+            <button id="tesoura" onclick="carta(`tesoura`)">
+                <img src="../assets/img/tesoura.png" alt="Tesoura">
+            </button>
+
+            <button id="spock" onclick="carta(`spock`)">
+                <img src="../assets/img/spock.png" alt="Spock">
+            </button>
+
+            <button id="lagarto" onclick="carta(`lagarto`)">
+                <img src="../assets/img/lagarto.png" alt="Lagarto">
+            </button>
+
+            <button onclick="escolherCartas()">Escolher cartas</button>
+
+            <button onclick="limpar()">Limpar escolhas</button>
+
+        </div>
+
+        <div id="moeda">
+            <p>Quem começará o jogo é...</p>
+            <img src="../assets/img/moeda.gif" alt="">
+        </div>
+
+        <div id="vida_usuario">
+            <progress id="barra_vida_usuario" value="0" max="100"></progress>
+        </div>
+
+        <div id="vida_usuario_nome">
+
+        </div>
+
+        <div id="vida_maquina">
+            <progress id="barra_vida_maquina" value="0" max="100"></progress>
+        </div>
+
+        <div id="vida_maquina_nome">
+
+        </div>
+
+        <div id="div_vs">
+            <img src="../assets/img/vs.png" onclick="atacar()" alt="">
+        </div>
+
+        <div id="div_cartas">
+
+            <!-- <div id="carta2">
+                <img src="../assets/img/${carta2}.png" id="carta2" onclick="aa('${carta2}', '${carta1}')" alt="">
+            </div>
+
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" id="carta1" alt="">
+            </div> -->
+
+        </div>
+
+        <div id="jogo">
+            <!-- <img src="../assets/img/papel.png" alt=""> -->
+            <!-- <button onclick="atacar()">Atacar</button> -->
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    let barra_vida_usuario = document.getElementById("barra_vida_usuario");
+    let barra_vida_maquina = document.getElementById("barra_vida_maquina");
+    let numero_quem_comeca = (Math.random() * 1).toFixed(0);
+    let numero_cartas = 0;
+    let carta1;
+    let carta2;
+    let carta1_maquina;
+    let carta2_maquina;
+    let btnEscolhido;
+    let cartas = {
+        "pedra": {
+            "vida": 100,
+            "ataque": 12
+        },
+        "papel": {
+            "vida": 70,
+            "ataque": 24
+        },
+        "tesoura": {
+            "vida": 55,
+            "ataque": 32
+        },
+        "spock": {
+            "vida": 85,
+            "ataque": 18
+        },
+        "lagarto": {
+            "vida": 65,
+            "ataque": 26
+        }
+    }
+
+    let carta1_vida = 0
+    let carta2_vida = 0
+    let carta1_maquina_vida = 0
+    let carta2_maquina_vida = 0
+
+    let carta1_ataque = 0
+    let carta2_ataque = 0
+    let carta1_maquina_ataque = 0
+    let carta2_maquina_ataque = 0
+
+    function onloadEsconder() {
+        document.getElementById('escolher').style.display = "none";
+        document.getElementById('jogo').style.display = "none";
+        document.getElementById('div_cartas').style.display = "none";
+        document.getElementById('moeda').style.display = "none";
+        document.getElementById('div_vs').style.display = "none";
+        document.getElementById('vida_usuario').style.display = "none";
+        document.getElementById('vida_usuario_nome').style.display = "none";
+        document.getElementById('vida_maquina').style.display = "none";
+        document.getElementById('vida_maquina_nome').style.display = "none";
+    }
+
+    function iniciar() {
+        document.getElementById('btniniciar').style.display = "none";
+        document.getElementById('escolher').style.display = "flex";
+        document.getElementById('regras').style.display = "none";
+    }
+
+    function carta(escolha) {
+        if (numero_cartas >= 2) {
+            alert("Você já escolheu suas duas cartas, se quer modificar, aperte em limpar.");
+            console.log(carta1)
+            console.log(carta2)
+
+        } else if (carta1 == escolha || carta2 == escolha) {
+            alert("Você já escolheu essa carta uma vez.")
+        } else if (numero_cartas == 0) {
+            numero_cartas++;
+            document.getElementById(escolha).classList.add("escolha")
+            carta1 = escolha;
+        } else if (numero_cartas == 1) {
+            numero_cartas++;
+            document.getElementById(escolha).classList.add("escolha")
+            carta2 = escolha;
+        }
+
+    }
+
+    function escolherCartas() {
+        div_cartas.innerHTML = "";
+        if (carta1 != null &&
+            carta2 != null
+        ) {
+            let numeroAleatorio1 = (Math.random() * 4).toFixed(0);
+            let numeroAleatorio2 = (Math.random() * 4).toFixed(0);
+
+            if (numeroAleatorio1 == 0) {
+                carta1_maquina = "pedra";
+
+            } else if (numeroAleatorio1 == 1) {
+                carta1_maquina = "papel";
+
+            } else if (numeroAleatorio1 == 2) {
+                carta1_maquina = "tesoura";
+
+            } else if (numeroAleatorio1 == 3) {
+                carta1_maquina = "spock";
+
+            } else if (numeroAleatorio1 == 4) {
+                carta1_maquina = "lagarto";
+
+            }
+
+            if (numeroAleatorio2 == 0) {
+                carta2_maquina = "pedra";
+
+            } else if (numeroAleatorio2 == 1) {
+                carta2_maquina = "papel";
+
+            } else if (numeroAleatorio2 == 2) {
+                carta2_maquina = "tesoura";
+
+            } else if (numeroAleatorio2 == 3) {
+                carta2_maquina = "spock";
+
+            } else if (numeroAleatorio2 == 4) {
+                carta2_maquina = "lagarto";
+
+            }
+
+            if (numeroAleatorio1 == numeroAleatorio2 ||
+                carta1_maquina == carta1 ||
+                carta1_maquina == carta2 ||
+                carta2_maquina == carta1 ||
+                carta2_maquina == carta2
+            ) {
+                console.log("de novo")
+                return escolherCartas();
+
+            } else {
+                document.getElementById('escolher').style.display = "none";
+                document.getElementById('moeda').style.display = "flex";
+
+                carta1_vida = cartas[carta1]["vida"];
+                carta2_vida = cartas[carta2]["vida"];
+                carta1_maquina_vida = cartas[carta1_maquina]["vida"];
+                carta2_maquina_vida = cartas[carta2_maquina]["vida"];
+
+                carta1_ataque = cartas[carta1]["ataque"];
+                carta2_ataque = cartas[carta2]["ataque"];
+                carta1_maquina_ataque = cartas[carta1_maquina]["ataque"];
+                carta2_maquina_ataque = cartas[carta2_maquina]["ataque"];
+
+                barra_vida_usuario.value = carta1_vida;
+                barra_vida_usuario.max = cartas[carta1]["vida"];
+                barra_vida_maquina.value = carta1_maquina_vida;
+                barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+
+                vida_usuario_nome.innerHTML = `<p>${carta1}</p>`;
+
+                vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+
+                // if (carta1 == "pedra" && (
+                //     carta1_maquina == "tesoura" ||
+                //     carta1_maquina == "lagarto"
+                // )) {
+                //     alert("Parabéns, você ganhou pontos extras. Qual você quer?")
+                // }
+
+                if (numero_quem_comeca == 0) {
+                    setTimeout(() => {
+                        moeda.innerHTML = `<img src="../assets/img/voce.png" alt=""><br>
+                    <p>Você!</p>`;
+                    }, 3400);
+
+                    setTimeout(() => {
+                        document.getElementById('moeda').style.display = "none";
+                        document.getElementById('jogo').style.display = "flex";
+                        document.getElementById('div_cartas').style.display = "flex";
+                        document.getElementById('div_vs').style.display = "flex";
+                        document.getElementById('vida_usuario').style.display = "flex";
+                        document.getElementById('vida_usuario_nome').style.display = "flex";
+                        document.getElementById('vida_maquina').style.display = "flex";
+                        document.getElementById('vida_maquina_nome').style.display = "flex";
+
+                    }, 5400);
+
+                } else {
+                    setTimeout(() => {
+                        moeda.innerHTML = `<img src="../assets/img/maquina.png" alt=""><br>
+                    <p>A máquina!</p>`;
+                    }, 3400);
+
+                    setTimeout(() => {
+                        document.getElementById('moeda').style.display = "none";
+                        document.getElementById('jogo').style.display = "flex";
+                        document.getElementById('div_cartas').style.display = "flex";
+                        document.getElementById('div_vs').style.display = "flex";
+                        document.getElementById('vida_usuario').style.display = "flex";
+                        document.getElementById('vida_usuario_nome').style.display = "flex";
+                        document.getElementById('vida_maquina').style.display = "flex";
+                        document.getElementById('vida_maquina_nome').style.display = "flex";
+                    }, 5400);
+                }
+
+            }
+        } else {
+            alert("Escolha 2 cartas.");
+        }
+
+    }
+
+    function troquei(escolhida, trocada) {
+        let troca;
+
+        troca = carta1_vida;
+        carta1_vida = carta2_vida;
+        carta2_vida = troca;
+        troca = carta1_ataque;
+        carta1_ataque = carta2_ataque;
+        carta2_ataque = troca;
+
+        barra_vida_usuario.value = carta1_vida;
+        barra_vida_usuario.max = cartas[escolhida]["vida"];
+
+        if (carta1_vida > carta1_maquina_vida) {
+            troca = carta1_maquina;
+            carta1_maquina = carta2_maquina;
+            carta2_maquina = troca;
+            troca = carta1_maquina_vida;
+            carta1_maquina_vida = carta2_maquina_vida;
+            carta2_maquina_vida = troca;
+            troca = carta1_maquina_ataque;
+            carta1_maquina_ataque = carta2_maquina_ataque;
+            carta2_maquina_ataque = troca;
+        }
+
+        barra_vida_maquina.value = carta1_maquina_vida;
+        barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+
+        vida_usuario_nome.innerHTML = `<p>${escolhida}</p>`;
+
+        vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+        div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${trocada}.png" onclick="troquei('${trocada}', '${escolhida}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${escolhida}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+
+        carta2 = trocada;
+        carta1 = escolhida;
+    }
+
+    function limpar() {
+        if (numero_cartas == 1) {
+            document.getElementById(carta1).classList.remove("escolha");
+            carta1 = null;
+
+        } else {
+            document.getElementById(carta1).classList.remove("escolha");
+            carta1 = null;
+            document.getElementById(carta2).classList.remove("escolha")
+            carta2 = null;
+        }
+        numero_cartas = 0;
+    }
+
+    function atacar() {
+        div_cartas.disabled = true;
+
+        setTimeout(() => {
+            div_cartas.disabled = false;
+        }, 2000);
+
+        carta1_maquina_vida = carta1_maquina_vida - carta1_ataque;
+        carta1_vida = carta1_vida - carta1_maquina_ataque;
+
+        barra_vida_usuario.value = carta1_vida;
+        barra_vida_maquina.value = carta1_maquina_vida;
+
+        console.log(carta1_maquina_vida)
+
+        // jogo.innerHTML += `<p>Vida restante: ${carta1_vida}
+        // Vida restante: ${carta2_vida} <br>
+        // Vida restante: ${carta1_maquina_vida}
+        // Vida restante: ${carta2_maquina_vida}</p>`;
+
+        setTimeout(() => {
+            div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+        }, 800);
+
+        // let barra = document.getElementById("barra");
+
+        // barra.value = barra.value - 8;
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 100);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 200);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 300);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 400);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 500);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 600);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 700);
+
+        // setTimeout(() => {
+        //     barra.value = barra.value + 1;
+        // }, 799);
+
+        console.log(cartas[carta1]["vida"])
+
+        setTimeout(() => {
+            if (carta1_maquina_vida < carta1_vida) {
+                troca = carta1_maquina;
+                carta1_maquina = carta2_maquina;
+                carta2_maquina = troca;
+                troca = carta1_maquina_vida;
+                carta1_maquina_vida = carta2_maquina_vida;
+                carta2_maquina_vida = troca;
+                troca = carta1_maquina_ataque;
+                carta1_maquina_ataque = carta2_maquina_ataque;
+                carta2_maquina_ataque = troca;
+
+                barra_vida_maquina.value = carta1_maquina_vida;
+                barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+
+                vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+            }
+        }, 900);
+
+    }
+
+</script>

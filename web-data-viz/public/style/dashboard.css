@@ -1,0 +1,304 @@
+@font-face {
+    font-family: "Bazinga";
+    src: url(../assets/fonte/Bazinga-Regular.otf);
+}
+
+@font-face {
+    font-family: "Bazinga Italic";
+    src: url(../assets/fonte/Bazinga-RegularItalic.otf);
+}
+
+@font-face {
+    font-family: "Open sans";
+    src: url(../assets/fonte/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
+body {
+    background-color: #1a1a2e;
+    color: #ffffff;
+    font-family: "Bazinga";
+    text-align: justify;
+    margin: 0;
+}
+
+.sidebar {
+    width: 250px;
+    height: 680px;
+    background-color: #ffd600;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.486) 0px 7px 29px 0px;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.link {
+    a {
+        color: white;
+    }
+}
+
+.linha {
+    border-style: solid;
+    border-width: 0.5px 0px 0px 0px;
+    border-color: #37b07a;
+    margin-top: 20px;
+}
+
+.logoSide {
+    margin-bottom: 30px;
+}
+
+.logoSide img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.logoSide h2 {
+    font-size: 18px;
+}
+
+.logoSide p {
+    font-size: 12px;
+    opacity: 0.8;
+    padding-top: 10px;
+    font-weight: 700;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.menu .ativo {
+    background: #fff;
+    color: #0f7a4f;
+}
+
+.hello {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.hello img {
+    width: 65px;
+    border: solid 5px white;
+    border-radius: 50px;
+}
+
+.hello span {
+    margin-left: 3px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#sair {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#sair .link {
+    margin-left: 40px;
+}
+
+#sair .material-icons {
+    font-size: 30px;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+#btniniciar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 350px;
+}
+
+#btniniciar button {
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #ffd600;
+}
+
+#escolher button img {
+    width: 100px;
+}
+
+.escolha {
+    border: solid 5px green;
+}
+
+#div_cartas {
+    flex-direction: row;
+    justify-content: center;
+}
+
+#carta1 {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('../assets/img/fundo1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+#div_cartas #carta1 img {
+    width: 280px;
+    border-radius: 20px;
+}
+
+#div_cartas #carta2 img {
+    width: 80px;
+    border-radius: 20px;
+}
+
+#carta1_maquina {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('../assets/img/fundo2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+#div_cartas #carta1_maquina img {
+    width: 280px;
+    border-radius: 20px;
+}
+
+#div_cartas #carta2_maquina img {
+    width: 80px;
+    border-radius: 20px;
+}
+
+#jogo {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#carta_vida {
+    display: flex;
+}
+
+#carta_maquina_vida {
+    display: flex;
+}
+
+#moeda {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 150px;
+}
+
+#moeda img {
+    width: 300px;
+}
+
+#div_vs {
+    position: absolute;
+    margin-top: 270px;
+    margin-left: 800px;
+}
+
+#div_vs img {
+    width: 120px;
+}
+
+#vida_usuario {
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 100px;
+}
+
+#vida_usuario progress {
+    margin-bottom: -20px;
+    width: 600px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#vida_usuario progress::-webkit-progress-value {
+    background: linear-gradient(97deg, #00ff55 0%, #ffaa00 63%, #ff0000 100%);
+    border-radius: 5px;
+}
+
+#vida_usuario progress::-webkit-progress-bar {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#vida_maquina {
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 1010px;
+}
+
+#vida_maquina progress {
+    margin-bottom: -20px;
+    width: 600px;
+    direction: rtl;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#vida_maquina progress::-webkit-progress-value {
+    background: linear-gradient(97deg, #ff0000 0%, #ffaa00 37%, #00ff55 100%);
+    border-radius: 5px;
+}
+
+#vida_maquina progress::-webkit-progress-bar {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#vida_usuario_nome {
+    position: fixed;
+    margin-left: 101px;
+    margin-top: 50px;
+}
+
+#vida_maquina_nome {
+    position: fixed;
+    margin-left: 1566px;
+    margin-top: 50px;
+}
