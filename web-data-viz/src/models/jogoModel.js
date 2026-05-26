@@ -18,8 +18,14 @@ function buscarPorCnpj(cnpj) {
   return database.executar(instrucaoSql);
 }
 
-function cadastrar(razaoSocial, cnpj) {
-  var instrucaoSql = `INSERT INTO empresa (razao_social, cnpj) VALUES ('${razaoSocial}', '${cnpj}')`;
+function cadastrar(partida, vencedor, id_usuario) {
+  var instrucaoSql = `insert into jogo values 
+(null, ${partida}, 
+CASE 
+when ${vencedor} = 1 then "Máquina"
+else "Você"
+end, 
+now(), ${id_usuario});`;
 
   return database.executar(instrucaoSql);
 }

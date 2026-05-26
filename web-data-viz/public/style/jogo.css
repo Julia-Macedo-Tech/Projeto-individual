@@ -136,7 +136,7 @@ body {
 #tudo-jogo {
     width: 1220px;
     height: 700px;
-    border: solid 2px white;
+    border: solid 2px #ffd600;
     border-radius: 20px;
     margin-left: 300px;
     margin-top: 12px;
@@ -249,7 +249,7 @@ body {
     border-radius: 20px;
 }
 
-#div_cartas #carta2 img {
+#carta2 img {
     width: 80px;
     border-radius: 20px;
 }
@@ -274,7 +274,7 @@ body {
     border-radius: 20px;
 }
 
-#div_cartas #carta2_maquina img {
+#carta2_maquina img {
     width: 80px;
     border-radius: 20px;
 }
@@ -325,6 +325,15 @@ body {
 
 #div_vs img {
     width: 120px;
+}
+.div-desabilitada {
+  opacity: 0.5;
+  pointer-events: none; /* Impede cliques e interações */
+}
+
+#div-invisivel {
+  opacity: 0;
+  pointer-events: none; /* Impede cliques e interações */
 }
 
 #vida_usuario {
@@ -384,4 +393,28 @@ body {
     position: fixed;
     margin-left: 1080px;
     margin-top: 50px;
+}
+
+#popup {
+    width: 550px; 
+    height: 350px; 
+    resize: none; 
+    border: 1px solid #ccc;
+    border-radius: 20px; 
+    padding: 20px;
+}
+
+#popup img {
+    width: 65px;
+    border: solid 5px white;
+    border-radius: 50px;
+}
+
+#popupRegras {
+    width: 550px; 
+    height: 350px; 
+    resize: none; 
+    border: 1px solid #ccc;
+    border-radius: 20px; 
+    padding: 20px;
 }

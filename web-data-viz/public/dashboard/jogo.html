@@ -49,9 +49,9 @@
 
         <div id="sair">
             <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
-            <dialog id="popup"
-                style="width: 250px; height: 250px; resize: none; border: 1px solid #ccc; padding: 20px;">
-                <p>aaaa</p>
+            <dialog id="popup">
+                <h2>Personalizar avatar</h2>
+                <img src="../assets/img/sem_foto.png" alt="">
                 <button onclick="popup.close()">Fechar</button>
             </dialog>
             <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
@@ -62,8 +62,7 @@
 
         <div id="regras">
             <button onclick="popupRegras.showModal()"><span class="material-icons">info</span></button>
-            <dialog id="popupRegras"
-                style="width: 250px; height: 250px; resize: none; border: 1px solid #ccc; padding: 20px;">
+            <dialog id="popupRegras">
                 <p>aaaa</p>
                 <button onclick="popupRegras.close()">Fechar</button>
             </dialog>
@@ -152,10 +151,13 @@
 
 <script>
 
+    let partida = 0;
+    let vencedor = 2;
     let barra_vida_usuario = document.getElementById("barra_vida_usuario");
     let barra_vida_maquina = document.getElementById("barra_vida_maquina");
     let numero_quem_comeca = (Math.random() * 1).toFixed(0);
     let numero_cartas = 0;
+    let numero_cartas_maquina = 2;
     let carta1;
     let carta2;
     let carta1_maquina;
@@ -233,6 +235,9 @@
     }
 
     function escolherCartas() {
+        document.getElementById(carta1).classList.remove("escolha");
+        document.getElementById(carta2).classList.remove("escolha");
+
         div_cartas.innerHTML = "";
         if (carta1 != null &&
             carta2 != null
@@ -297,10 +302,10 @@
                 carta1_maquina_ataque = cartas[carta1_maquina]["ataque"];
                 carta2_maquina_ataque = cartas[carta2_maquina]["ataque"];
 
-                barra_vida_usuario.value = carta1_vida;
                 barra_vida_usuario.max = cartas[carta1]["vida"];
-                barra_vida_maquina.value = carta1_maquina_vida;
+                barra_vida_usuario.value = carta1_vida;
                 barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                barra_vida_maquina.value = carta1_maquina_vida;
 
                 vida_usuario_nome.innerHTML = `<p>${carta1}</p>`;
 
@@ -379,8 +384,8 @@
         carta1_ataque = carta2_ataque;
         carta2_ataque = troca;
 
-        barra_vida_usuario.value = carta1_vida;
         barra_vida_usuario.max = cartas[escolhida]["vida"];
+        barra_vida_usuario.value = carta1_vida;
 
         if (carta1_vida > carta1_maquina_vida) {
             troca = carta1_maquina;
@@ -394,8 +399,8 @@
             carta2_maquina_ataque = troca;
         }
 
-        barra_vida_maquina.value = carta1_maquina_vida;
         barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+        barra_vida_maquina.value = carta1_maquina_vida;
 
         vida_usuario_nome.innerHTML = `<p>${escolhida}</p>`;
 
@@ -432,97 +437,227 @@
         numero_cartas = 0;
     }
 
+    let carta_morreu = false;
+    let carta_maquina_morreu = false;
+
     function atacar() {
-        div_cartas.disabled = true;
+        if (numero_quem_comeca == 0) {
+            document.getElementById("div_vs").classList.add("div-desabilitada");
 
-        setTimeout(() => {
-            div_cartas.disabled = false;
-        }, 2000);
+            setTimeout(() => {
+                document.getElementById("div_vs").classList.remove("div-desabilitada");
+            }, 1000);
 
-        carta1_maquina_vida = carta1_maquina_vida - carta1_ataque;
-        carta1_vida = carta1_vida - carta1_maquina_ataque;
+            carta1_maquina_vida = carta1_maquina_vida - carta1_ataque;
 
-        barra_vida_usuario.value = carta1_vida;
-        barra_vida_maquina.value = carta1_maquina_vida;
+            if (numero_cartas_maquina == 1 && carta1_maquina_vida <= 0) {
+                alert("Você venceu o jogo!");
+                vencedor = 0;
+                carta1 = null;
+                carta2 = null;
+                carta1_maquina = null;
+                carta2_maquina = null;
+                numero_cartas = 0;
+                numero_cartas_maquina = 2;
+                numero_quem_comeca = (Math.random() * 1).toFixed(0);
+                carta1_vida = 0
+                carta2_vida = 0
+                carta1_maquina_vida = 0
+                carta2_maquina_vida = 0
+                carta1_ataque = 0
+                carta2_ataque = 0
+                carta1_maquina_ataque = 0
+                carta2_maquina_ataque = 0
+                carta_morreu = false;
+                carta_maquina_morreu = false;
 
-        console.log(carta1_maquina_vida)
+                partida++;
 
-        // jogo.innerHTML += `<p>Vida restante: ${carta1_vida}
-        // Vida restante: ${carta2_vida} <br>
-        // Vida restante: ${carta1_maquina_vida}
-        // Vida restante: ${carta2_maquina_vida}</p>`;
+                moeda.innerHTML = `<img src="../assets/img/moeda.gif" alt=""><br>`;
 
-        setTimeout(() => {
-            div_cartas.innerHTML = `<div id="carta2">
-                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
-            </div>
-            <div id="carta1">
-                <img src="../assets/img/${carta1}.png" alt="">
-            </div>
-            <div id="carta1_maquina">
-            <img src="../assets/img/${carta1_maquina}.png" alt="">
-            </div>
-            <div id="carta2_maquina">
-            <img src="../assets/img/${carta2_maquina}.png" alt="">
-            </div>`;
-        }, 800);
+                document.getElementById('jogo').style.display = "none";
+                document.getElementById('div_cartas').style.display = "none";
+                document.getElementById('div_vs').style.display = "none";
+                document.getElementById('vida_usuario').style.display = "none";
+                document.getElementById('vida_usuario_nome').style.display = "none";
+                document.getElementById('vida_maquina').style.display = "none";
+                document.getElementById('vida_maquina_nome').style.display = "none";
+                document.getElementById('btniniciar').style.display = "flex";
+                document.getElementById('regras').style.display = "flex";
 
-        // let barra = document.getElementById("barra");
+                return cadastrar();
 
-        // barra.value = barra.value - 8;
+            }
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 100);
+            carta1_vida = carta1_vida - carta1_maquina_ataque;
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 200);
+            if (numero_cartas == 1 && carta1_vida <= 0) {
+                alert("Você perdeu o jogo!");
+                vencedor = 0;
+                carta1 = null;
+                carta2 = null;
+                carta1_maquina = null;
+                carta2_maquina = null;
+                numero_cartas = 0;
+                numero_cartas_maquina = 2;
+                numero_quem_comeca = (Math.random() * 1).toFixed(0);
+                carta1_vida = 0
+                carta2_vida = 0
+                carta1_maquina_vida = 0
+                carta2_maquina_vida = 0
+                carta1_ataque = 0
+                carta2_ataque = 0
+                carta1_maquina_ataque = 0
+                carta2_maquina_ataque = 0
+                carta_morreu = false;
+                carta_maquina_morreu = false;
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 300);
+                partida++;
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 400);
+                moeda.innerHTML = `<img src="../assets/img/moeda.gif" alt=""><br>`;
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 500);
+                document.getElementById('jogo').style.display = "none";
+                document.getElementById('div_cartas').style.display = "none";
+                document.getElementById('div_vs').style.display = "none";
+                document.getElementById('vida_usuario').style.display = "none";
+                document.getElementById('vida_usuario_nome').style.display = "none";
+                document.getElementById('vida_maquina').style.display = "none";
+                document.getElementById('vida_maquina_nome').style.display = "none";
+                document.getElementById('btniniciar').style.display = "flex";
+                document.getElementById('regras').style.display = "flex";
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 600);
+                return cadastrar();
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 700);
+            }
 
-        // setTimeout(() => {
-        //     barra.value = barra.value + 1;
-        // }, 799);
+            barra_vida_maquina.value = carta1_maquina_vida;
 
-        console.log(cartas[carta1]["vida"])
+            setTimeout(() => {
 
-        setTimeout(() => {
-            if (carta1_maquina_vida < carta1_vida) {
-                troca = carta1_maquina;
+            }, 100);
+
+            setTimeout(() => {
+
+            }, 200);
+
+            setTimeout(() => {
+
+            }, 300);
+
+            setTimeout(() => {
+
+            }, 400);
+
+            setTimeout(() => {
+
+            }, 500);
+
+            setTimeout(() => {
+                barra_vida_usuario.value = carta1_vida;
+            }, 600);
+
+            console.log(carta1_maquina_vida)
+
+            // jogo.innerHTML += `<p>Vida restante: ${carta1_vida}
+            // Vida restante: ${carta2_vida} <br>
+            // Vida restante: ${carta1_maquina_vida}
+            // Vida restante: ${carta2_maquina_vida}</p>`;
+
+            if (carta1_vida <= 0) {
+                carta_morreu = true;
+                numero_cartas--;
+                carta1 = carta2;
+                carta1_vida = carta2_vida;
+                carta1_ataque = carta2_ataque;
+
+                if (numero_cartas == 1) {
+                    carta2 = null;
+                    carta2_vida = 0;
+                    carta2_ataque = 0;
+                }
+
+                barra_vida_usuario.max = cartas[carta1]["vida"];
+                barra_vida_usuario.value = carta1_vida;
+                vida_usuario_nome.innerHTML = `<p>${carta1}</p>`;
+
+            }
+
+            if (carta1_maquina_vida <= 0) {
+                carta_maquina_morreu = true;
+                numero_cartas_maquina--;
                 carta1_maquina = carta2_maquina;
-                carta2_maquina = troca;
-                troca = carta1_maquina_vida;
                 carta1_maquina_vida = carta2_maquina_vida;
-                carta2_maquina_vida = troca;
-                troca = carta1_maquina_ataque;
                 carta1_maquina_ataque = carta2_maquina_ataque;
-                carta2_maquina_ataque = troca;
 
-                barra_vida_maquina.value = carta1_maquina_vida;
+                if (numero_cartas_maquina == 1) {
+                    carta2_maquina = null;
+                    carta2_maquina_vida = 0;
+                    carta2_maquina_ataque = 0;
+                }
+
                 barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
-
+                barra_vida_maquina.value = carta1_maquina_vida;
                 vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
 
-                div_cartas.innerHTML = `<div id="carta2">
+            }
+
+            if (carta_morreu && carta_maquina_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1}.png">
+        </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+    `;
+
+                return;
+
+            } else if (carta_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1}.png">
+        </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+        </div>
+    `;
+                return;
+
+            } else if (carta_maquina_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+    `;
+                return;
+            }
+
+
+            if (numero_cartas >= 2) {
+                setTimeout(() => {
+                    div_cartas.innerHTML = `<div id="carta2">
                 <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
             </div>
             <div id="carta1">
@@ -534,9 +669,486 @@
             <div id="carta2_maquina">
             <img src="../assets/img/${carta2_maquina}.png" alt="">
             </div>`;
-            }
-        }, 900);
+                }, 800);
 
+            } else if (numero_cartas == 1) {
+                setTimeout(() => {
+                    div_cartas.innerHTML = `<div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 800);
+            }
+
+            console.log(cartas[carta1]["vida"])
+
+            if (carta1_maquina_vida < carta1_vida
+                && numero_cartas >= 2
+            ) {
+                setTimeout(() => {
+                    troca = carta1_maquina;
+                    carta1_maquina = carta2_maquina;
+                    carta2_maquina = troca;
+                    troca = carta1_maquina_vida;
+                    carta1_maquina_vida = carta2_maquina_vida;
+                    carta2_maquina_vida = troca;
+                    troca = carta1_maquina_ataque;
+                    carta1_maquina_ataque = carta2_maquina_ataque;
+                    carta2_maquina_ataque = troca;
+
+                    barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                    barra_vida_maquina.value = carta1_maquina_vida;
+
+                    vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                    div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 1500);
+
+            } else if (carta1_maquina_vida < carta1_vida
+                && numero_cartas == 1) {
+                setTimeout(() => {
+                    console.log(numero_cartas)
+                    troca = carta1_maquina;
+                    carta1_maquina = carta2_maquina;
+                    carta2_maquina = troca;
+                    troca = carta1_maquina_vida;
+                    carta1_maquina_vida = carta2_maquina_vida;
+                    carta2_maquina_vida = troca;
+                    troca = carta1_maquina_ataque;
+                    carta1_maquina_ataque = carta2_maquina_ataque;
+                    carta2_maquina_ataque = troca;
+
+                    barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                    barra_vida_maquina.value = carta1_maquina_vida;
+
+                    vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                    div_cartas.innerHTML = `<div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 1500);
+            }
+
+            document.getElementById("carta2").classList.add("div-desabilitada");
+
+            setTimeout(() => {
+                document.getElementById("carta2").classList.remove("div-desabilitada");
+            }, 40000);
+
+        } else {
+
+            document.getElementById("div_vs").classList.add("div-desabilitada");
+
+            setTimeout(() => {
+                document.getElementById("div_vs").classList.remove("div-desabilitada");
+            }, 1000);
+
+            carta1_vida = carta1_vida - carta1_maquina_ataque;
+
+            if (numero_cartas == 1 && carta1_vida <= 0) {
+                alert("Você perdeu o jogo!");
+                vencedor = 0;
+                carta1 = null;
+                carta2 = null;
+                carta1_maquina = null;
+                carta2_maquina = null;
+                numero_cartas = 0;
+                numero_cartas_maquina = 2;
+                numero_quem_comeca = (Math.random() * 1).toFixed(0);
+                carta1_vida = 0
+                carta2_vida = 0
+                carta1_maquina_vida = 0
+                carta2_maquina_vida = 0
+                carta1_ataque = 0
+                carta2_ataque = 0
+                carta1_maquina_ataque = 0
+                carta2_maquina_ataque = 0
+                carta_morreu = false;
+                carta_maquina_morreu = false;
+
+                partida++;
+
+                moeda.innerHTML = `<img src="../assets/img/moeda.gif" alt=""><br>`;
+
+                document.getElementById('jogo').style.display = "none";
+                document.getElementById('div_cartas').style.display = "none";
+                document.getElementById('div_vs').style.display = "none";
+                document.getElementById('vida_usuario').style.display = "none";
+                document.getElementById('vida_usuario_nome').style.display = "none";
+                document.getElementById('vida_maquina').style.display = "none";
+                document.getElementById('vida_maquina_nome').style.display = "none";
+                document.getElementById('btniniciar').style.display = "flex";
+                document.getElementById('regras').style.display = "flex";
+
+                return cadastrar();
+
+            }
+
+            carta1_maquina_vida = carta1_maquina_vida - carta1_ataque;
+
+            if (numero_cartas_maquina == 1 && carta1_maquina_vida <= 0) {
+                alert("Você venceu o jogo!");
+                vencedor = 0;
+                carta1 = null;
+                carta2 = null;
+                carta1_maquina = null;
+                carta2_maquina = null;
+                numero_cartas = 0;
+                numero_cartas_maquina = 2;
+                numero_quem_comeca = (Math.random() * 1).toFixed(0);
+                carta1_vida = 0
+                carta2_vida = 0
+                carta1_maquina_vida = 0
+                carta2_maquina_vida = 0
+                carta1_ataque = 0
+                carta2_ataque = 0
+                carta1_maquina_ataque = 0
+                carta2_maquina_ataque = 0
+                carta_morreu = false;
+                carta_maquina_morreu = false;
+
+                partida++;
+
+                moeda.innerHTML = `<img src="../assets/img/moeda.gif" alt=""><br>`;
+
+                document.getElementById('jogo').style.display = "none";
+                document.getElementById('div_cartas').style.display = "none";
+                document.getElementById('div_vs').style.display = "none";
+                document.getElementById('vida_usuario').style.display = "none";
+                document.getElementById('vida_usuario_nome').style.display = "none";
+                document.getElementById('vida_maquina').style.display = "none";
+                document.getElementById('vida_maquina_nome').style.display = "none";
+                document.getElementById('btniniciar').style.display = "flex";
+                document.getElementById('regras').style.display = "flex";
+
+                return cadastrar();
+
+            }
+
+            barra_vida_usuario.value = carta1_vida;
+
+            setTimeout(() => {
+
+            }, 100);
+
+            setTimeout(() => {
+
+            }, 200);
+
+            setTimeout(() => {
+
+            }, 300);
+
+            setTimeout(() => {
+
+            }, 400);
+
+            setTimeout(() => {
+
+            }, 500);
+
+            setTimeout(() => {
+                barra_vida_maquina.value = carta1_maquina_vida;
+            }, 600);
+
+            console.log(carta1_maquina_vida)
+
+            // jogo.innerHTML += `<p>Vida restante: ${carta1_vida}
+            // Vida restante: ${carta2_vida} <br>
+            // Vida restante: ${carta1_maquina_vida}
+            // Vida restante: ${carta2_maquina_vida}</p>`;
+
+            if (carta1_vida <= 0) {
+                carta_morreu = true;
+                numero_cartas--;
+                carta1 = carta2;
+                carta1_vida = carta2_vida;
+                carta1_ataque = carta2_ataque;
+
+                if (numero_cartas == 1) {
+                    carta2 = null;
+                    carta2_vida = 0;
+                    carta2_ataque = 0;
+                }
+
+                barra_vida_usuario.max = cartas[carta1]["vida"];
+                barra_vida_usuario.value = carta1_vida;
+                vida_usuario_nome.innerHTML = `<p>${carta1}</p>`;
+
+            }
+
+            if (carta1_maquina_vida <= 0) {
+                carta_maquina_morreu = true;
+                numero_cartas_maquina--;
+                carta1_maquina = carta2_maquina;
+                carta1_maquina_vida = carta2_maquina_vida;
+                carta1_maquina_ataque = carta2_maquina_ataque;
+
+                if (numero_cartas_maquina == 1) {
+                    carta2_maquina = null;
+                    carta2_maquina_vida = 0;
+                    carta2_maquina_ataque = 0;
+                }
+
+                barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                barra_vida_maquina.value = carta1_maquina_vida;
+                vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+            }
+
+            if (carta_morreu && carta_maquina_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1}.png">
+        </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+    `;
+
+                return;
+
+            } else if (carta_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1}.png">
+        </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+        </div>
+    `;
+                return;
+
+            } else if (carta_maquina_morreu) {
+                div_cartas.innerHTML = `
+        <div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+        <div id="carta1">
+            <img src="../assets/img/${carta1}.png" alt="">
+        </div>
+        <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+        <div id="carta2_maquina" style="visibility: hidden; pointer-events: none; width: 80px;">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+        </div>
+    `;
+                return;
+            }
+
+
+            if (numero_cartas >= 2) {
+                setTimeout(() => {
+                    div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 800);
+
+            } else if (numero_cartas == 1) {
+                setTimeout(() => {
+                    div_cartas.innerHTML = `<div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 800);
+            }
+
+            console.log(cartas[carta1]["vida"])
+
+            if (carta1_maquina_vida < carta1_vida
+                && numero_cartas >= 2
+            ) {
+                setTimeout(() => {
+                    troca = carta1_maquina;
+                    carta1_maquina = carta2_maquina;
+                    carta2_maquina = troca;
+                    troca = carta1_maquina_vida;
+                    carta1_maquina_vida = carta2_maquina_vida;
+                    carta2_maquina_vida = troca;
+                    troca = carta1_maquina_ataque;
+                    carta1_maquina_ataque = carta2_maquina_ataque;
+                    carta2_maquina_ataque = troca;
+
+                    barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                    barra_vida_maquina.value = carta1_maquina_vida;
+
+                    vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                    div_cartas.innerHTML = `<div id="carta2">
+                <img src="../assets/img/${carta2}.png" onclick="troquei('${carta2}', '${carta1}')" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 1500);
+
+            } else if (carta1_maquina_vida < carta1_vida
+                && numero_cartas == 1) {
+                setTimeout(() => {
+                    console.log(numero_cartas)
+                    troca = carta1_maquina;
+                    carta1_maquina = carta2_maquina;
+                    carta2_maquina = troca;
+                    troca = carta1_maquina_vida;
+                    carta1_maquina_vida = carta2_maquina_vida;
+                    carta2_maquina_vida = troca;
+                    troca = carta1_maquina_ataque;
+                    carta1_maquina_ataque = carta2_maquina_ataque;
+                    carta2_maquina_ataque = troca;
+
+                    barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+                    barra_vida_maquina.value = carta1_maquina_vida;
+
+                    vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+                    div_cartas.innerHTML = `<div id="carta2" style="visibility: hidden; pointer-events: none; width: 80px;">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1">
+                <img src="../assets/img/${carta1}.png" alt="">
+            </div>
+            <div id="carta1_maquina">
+            <img src="../assets/img/${carta1_maquina}.png" alt="">
+            </div>
+            <div id="carta2_maquina">
+            <img src="../assets/img/${carta2_maquina}.png" alt="">
+            </div>`;
+                }, 1500);
+            }
+
+            document.getElementById("carta2").classList.add("div-desabilitada");
+
+            setTimeout(() => {
+                document.getElementById("carta2").classList.remove("div-desabilitada");
+            }, 40000);
+        }
+
+    }
+
+    // function carta1_maquina_perdida() {
+    //     numero_cartas_maquina--;
+    //     carta1_maquina = carta2_maquina;
+    //     carta1_maquina_vida = carta2_maquina_vida;
+    //     carta1_maquina_ataque = carta2_maquina_ataque;
+
+    //     if (numero_cartas_maquina == 1) {
+    //         carta2_maquina = null;
+    //         carta2_maquina_vida = 0;
+    //         carta2_maquina_ataque = 0;
+    //     }
+
+    //     barra_vida_maquina.max = cartas[carta1_maquina]["vida"];
+    //     barra_vida_maquina.value = carta1_maquina_vida;
+    //     vida_maquina_nome.innerHTML = `<p>${carta1_maquina}</p>`;
+
+    // }
+
+    function cadastrar() {
+
+        let id_usuario = sessionStorage.ID_USUARIO;
+
+        console.log(id_usuario)
+
+        // Enviando o valor da nova input
+        fetch("/jogo/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                partidaServer: partida,
+                vencedorServer: vencedor,
+                id_usuarioServer: id_usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("block");
+
+                    console.log
+                        ("Cadastro realizado com sucesso! Redirecionando para tela...");
+
+                    setTimeout(() => {
+                        window.location = "jogo.html";
+                    }, "2000");
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
 
 </script>

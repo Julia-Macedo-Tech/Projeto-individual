@@ -302,3 +302,32 @@ body {
     margin-left: 1566px;
     margin-top: 50px;
 }
+
+#pontuacaoEJogoSerie {
+    width: 1220px;
+    height: 700px;
+    border: solid 2px #ffd600;
+    border-radius: 20px;
+    margin-left: 300px;
+    margin-top: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image: url('../assets/img/fundo-big.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: inherit;
+}
+
+#pontuacaoEJogoSerie::-webkit-scrollbar {
+    width: 4px;
+}
+
+#pontuacaoEJogoSerie::-webkit-scrollbar-track {
+    background-color: #ffd600;
+    border-radius: 2px;
+}
+
+#pontuacaoEJogoSerie::-webkit-scrollbar-thumb {
+    background-color: #37b07a;
+    border-radius: 2px;
+}

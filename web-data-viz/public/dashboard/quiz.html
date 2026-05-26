@@ -6,13 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
 
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/dashboard.css">
     <script src="../js/sessao.js"></script>
+    <link rel="icon" href="../assets/icon/icon.ico">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
 </head>
 
 
 <body onload="onloadEsconder()">
+
+    <div class="sidebar">
+        <div>
+            <div class="logoSide">
+                <img src="../assets/icon/icon.png">
+                <h1>Big Bang Theory</h1>
+                <p>Smart City Solution</p>
+                <div class="linha"></div>
+            </div>
+            <ul class="menu">
+                <a href="jogo.html">
+                    <li class="ativo">Jogo</li>
+                </a>
+                <a href="quiz.html">
+                    <li>Quiz</li>
+                </a>
+                <a href="dashboard.html">
+                    <li>Estatistícas</li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="hello">
+            <img src="../assets/img/sem_foto.png" alt="">
+            <span id="b_usuario">usuário</span>
+        </div>
+
+        <div id="sair">
+            <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
+            <dialog id="popup">
+                <h2>Personalizar avatar</h2>
+                <img src="../assets/img/sem_foto.png" alt="">
+                <button onclick="popup.close()">Fechar</button>
+            </dialog>
+            <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
+        </div>
+    </div>
+
     <div id="pontuacaoEJogoSerie">
         <button id="btnIniciarQuizSerie" onclick="iniciarQuizSerie()">INICIAR QUIZ</button>
 

@@ -19,6 +19,14 @@ insert into usuario(nome, senha) value
 
 select * from usuario;
 
+create table jogo (
+id_jogo int primary key auto_increment,
+partida int not null,
+vencedor varchar(20) not null,
+cadastrado_em DATETIME DEFAULT CURRENT_TIMESTAMP(),
+fk_usuario int, 
+foreign key(fk_usuario) references usuario(id_usuario));
+
 create table quiz (
 id_quiz int primary key auto_increment,
 pontuacao_matematica int not null,
