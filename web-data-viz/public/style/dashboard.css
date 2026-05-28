@@ -25,7 +25,7 @@ body {
     width: 250px;
     height: 680px;
     background-color: #ffd600;
-    color: #fff;
+    color: #1a1a2e;
     position: fixed;
     top: 0;
     left: 0;
@@ -38,21 +38,21 @@ body {
     box-shadow: rgba(100, 100, 111, 0.486) 0px 7px 29px 0px;
 
     a {
-        color: white;
+        color: #1a1a2e;
         text-decoration: none;
     }
 }
 
 .link {
     a {
-        color: white;
+        color: #1a1a2e;
     }
 }
 
 .linha {
     border-style: solid;
     border-width: 0.5px 0px 0px 0px;
-    border-color: #37b07a;
+    border-color: #1a1a2e;
     margin-top: 20px;
 }
 
@@ -61,8 +61,8 @@ body {
 }
 
 .logoSide img {
-    width: 40px;
-    margin-bottom: 10px;
+    width: 70px;
+    margin-bottom: 5px;
 }
 
 .logoSide h2 {
@@ -93,8 +93,8 @@ body {
 }
 
 .menu .ativo {
-    background: #fff;
-    color: #0f7a4f;
+    background: #1a1a2e;
+    color: #ffd600;
 }
 
 .hello {
@@ -106,7 +106,7 @@ body {
 
 .hello img {
     width: 65px;
-    border: solid 5px white;
+    border: solid 5px #1a1a2e;
     border-radius: 50px;
 }
 
@@ -123,12 +123,52 @@ body {
     align-items: center;
 }
 
+#sair button {
+    background-color: #ffd600;
+    border: none;
+    cursor: pointer;
+}
+
 #sair .link {
-    margin-left: 40px;
+    background-color: #ffd600;
+    border: none;
+    cursor: pointer;
 }
 
 #sair .material-icons {
     font-size: 30px;
+}
+
+.dash {
+    width: 1220px;
+    height: 700px;
+    border: solid 2px #ffd600;
+    border-radius: 20px;
+    margin-left: 300px;
+    margin-top: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-image: url('../assets/img/fundo-big.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: inherit;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dash::-webkit-scrollbar {
+    width: 4px;
+}
+
+.dash::-webkit-scrollbar-track {
+    background-color: #ffd600;
+    border-radius: 2px;
+}
+
+.dash::-webkit-scrollbar-thumb {
+    background-color: #1a1a2e;
+    border-radius: 2px;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -316,6 +356,10 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-clip: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #pontuacaoEJogoSerie::-webkit-scrollbar {
@@ -328,6 +372,340 @@ body {
 }
 
 #pontuacaoEJogoSerie::-webkit-scrollbar-thumb {
-    background-color: #37b07a;
+    background-color: #1a1a2e;
     border-radius: 2px;
+}
+
+#graficos {
+    width: 900px;
+
+}
+
+#textoFacil {
+    color: #4cc659;
+    font-size: 25px;
+}
+
+#textoFacil span {
+    color: #ffffff;
+    font-size: 25px;
+}
+
+#textoMedio {
+    color: #ffd600;
+    font-size: 25px;
+}
+
+#textoMedio span {
+    color: #ffffff;
+    font-size: 25px;
+}
+
+#textoDificil {
+    color: #d5312c;
+    font-size: 25px;
+}
+
+#textoDificil span {
+    color: #ffffff;
+    font-size: 25px;
+}
+
+#kpis {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 1000px;
+    margin-top: 20px;
+}
+
+#kpiTotal {
+    background-color: #894cc6ba;
+    border-radius: 20px;
+    border: solid 2px #894cc6;
+    width: 450px;
+    height: 150px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 15px;
+}
+
+#kpiFacil {
+    background-color: #4cc658ba;
+    border-radius: 20px;
+    border: solid 2px #4cc659;
+    width: 450px;
+    height: 150px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 15px;
+}
+
+#kpiDificil {
+    background-color: #d5322cac;
+    border-radius: 20px;
+    border: solid 2px #d5312c;
+    width: 450px;
+    height: 150px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 15px;
+}
+
+#kpiMedio {
+    background-color: #ffd500a6;
+    border-radius: 20px;
+    border: solid 2px #ffd600;
+    width: 450px;
+    height: 150px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 15px;
+}
+
+#escolherNivel {
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#escolherNivel p {
+    font-size: 25px;
+}
+
+#escolherNivel span {
+    font-size: 20px;
+    font-family: "Open sans";
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#facil {
+    background-color: #4cc659;
+    width: 90px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#medio {
+    background-color: #ffd600;
+    width: 90px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#dificil {
+    background-color: #d5312c;
+    width: 90px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#tituloNome {
+    font-size: 40px !important;
+    font-family: "Bazinga italic";
+    color: #ffffff;
+    text-align: center;
+}
+
+#jogoSerie {
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a2ed7;
+    width: 500px;
+    height: 600px;
+    border-radius: 20px;
+    align-items: center;
+}
+
+#infoQuestaoSerie {
+    width: 300px;
+    background-color: #ffd5008b;
+    border-radius: 20px;
+    text-align: center;
+    color: #ffd600;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    font-family: "Open sans";
+}
+
+#perguntaDaQuestaoAtualSerie {
+    font-size: 20px;
+    width: 480px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+#opcoesSerie {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    height: 200px;
+    font-family: "Open sans";
+}
+
+#opcoesSerie span {
+    background-color: #1a1a2e6d;
+    border: solid 2px #1a1a2e;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#botoesSerie {
+    display: flex;
+    flex-direction: column;
+}
+
+#botoesSerie button {
+    padding: 15px;
+    padding-left: 133px;
+    padding-right: 133px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #ffd600;
+    font-family: "Bazinga";
+}
+
+#botoesNovos {
+    display: flex;
+    flex-direction: column;
+}
+
+#botoesNovos button {
+    padding: 15px;
+    padding-left: 133px;
+    padding-right: 133px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #ffd600;
+    font-family: "Bazinga";
+}
+
+#jogoMatematica {
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a2ed7;
+    width: 500px;
+    height: 600px;
+    border-radius: 20px;
+    align-items: center;
+}
+
+#infoQuestaoMatematica {
+    width: 300px;
+    background-color: #ffd5008b;
+    border-radius: 20px;
+    text-align: center;
+    color: #ffd600;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    font-family: "Open sans";
+}
+
+#perguntaDaQuestaoAtualMatematica {
+    font-size: 20px;
+    width: 480px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+#opcoesMatematica {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    height: 200px;
+    font-family: "Open sans";
+}
+
+#opcoesMatematica span {
+    background-color: #1a1a2e6d;
+    border: solid 2px #1a1a2e;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#botoesMatematica {
+    display: flex;
+    flex-direction: column;
+}
+
+#botoesMatematica button {
+    padding: 15px;
+    padding-left: 133px;
+    padding-right: 133px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #ffd600;
+    font-family: "Bazinga";
+}
+
+#kpis #kpiTotal .material-icons {
+    margin-left: 5px;
+    background-color: #894cc6;
+    margin-top: 8px;
+    font-size: 25px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+#kpis #kpiFacil .material-icons {
+    margin-left: 5px;
+    background-color: #4cc659;
+    margin-top: 8px;
+    font-size: 25px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+#kpis #kpiMedio .material-icons {
+    margin-left: 5px;
+    background-color: #ffd600;
+    margin-top: 8px;
+    font-size: 25px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+#kpis #kpiDificil .material-icons {
+    margin-left: 5px;
+    background-color: #d5312c;
+    margin-top: 8px;
+    font-size: 25px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+#kpis p {
+    font-family: "Open sans";
+    font-weight: bolder;
+    margin-top: 2px;
+    font-size: 15px;
+    margin-left: 10px;
+    color: white;
+}
+
+#kpis span {
+    margin-top: 2px;
+    font-size: 20px;
+    color: white;
 }

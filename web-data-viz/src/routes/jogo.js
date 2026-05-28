@@ -16,7 +16,7 @@ router.get("/buscar/:id", function (req, res) {
   jogoController.buscarPorId(req, res);
 });
 
-router.get("/listar", function (req, res) {
+router.get("/listar/:id_usuario", function (req, res) {
   jogoController.listar(req, res);
 });
 

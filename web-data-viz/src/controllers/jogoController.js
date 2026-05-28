@@ -9,9 +9,19 @@ function buscarPorCnpj(req, res) {
 }
 
 function listar(req, res) {
-  jogoModel.listar().then((resultado) => {
-    res.status(200).json(resultado);
-  });
+  var id_usuario = req.params.id_usuario;
+  
+      jogoModel.listar(id_usuario).then(function (resultado) {
+          if (resultado.length > 0) {
+              res.status(200).json(resultado);
+          } else {
+              res.status(204).send("Nenhum resultado encontrado!")
+          }
+      }).catch(function (erro) {
+          console.log(erro);
+          console.log("Houve um erro ao buscar as ultimas partidas.", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      });
 }
 
 function buscarPorId(req, res) {

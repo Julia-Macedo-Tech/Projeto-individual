@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo - Quiz</title>
+    <title>Quiz</title>
 
     <link rel="stylesheet" href="../style/dashboard.css">
     <script src="../js/sessao.js"></script>
@@ -28,15 +28,14 @@
             <div class="logoSide">
                 <img src="../assets/icon/icon.png">
                 <h1>Big Bang Theory</h1>
-                <p>Smart City Solution</p>
                 <div class="linha"></div>
             </div>
             <ul class="menu">
                 <a href="jogo.html">
-                    <li class="ativo">Jogo</li>
+                    <li>Jogo</li>
                 </a>
                 <a href="quiz.html">
-                    <li>Quiz</li>
+                    <li class="ativo">Quiz</li>
                 </a>
                 <a href="dashboard.html">
                     <li>Estatistícas</li>
@@ -45,23 +44,36 @@
         </div>
 
         <div class="hello">
-            <img src="../assets/img/sem_foto.png" alt="">
+            <img src="../assets/img/1.png" alt="">
             <span id="b_usuario">usuário</span>
         </div>
 
         <div id="sair">
-            <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
+            <!-- <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
             <dialog id="popup">
                 <h2>Personalizar avatar</h2>
                 <img src="../assets/img/sem_foto.png" alt="">
                 <button onclick="popup.close()">Fechar</button>
-            </dialog>
-            <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
+            </dialog> -->
+            <button class="link material-icons" onclick="limparSessao()">logout</button>
         </div>
     </div>
 
     <div id="pontuacaoEJogoSerie">
-        <button id="btnIniciarQuizSerie" onclick="iniciarQuizSerie()">INICIAR QUIZ</button>
+        <div id="escolherNivel">
+            <p id="tituloNome">Você conhece mais sobre matemática ou sobre a série Big Bang Theory?</p>
+            <p>Escolha o nível de dificuldade do quiz!</p>
+            <span id="facil"><input type="radio" onclick="iniciarQuizSerie()" name="btnIniciarQuizSerie"
+                    id="btnIniciarQuizSerie" class="radio" value="Fácil">Fácil</span>
+            <span id="medio"><input type="radio" onclick="iniciarQuizSerie()" name="btnIniciarQuizSerie"
+                    id="btnIniciarQuizSerie" class="radio" value="Médio">Médio</span>
+            <span id="dificil"><input type="radio" onclick="iniciarQuizSerie()" name="btnIniciarQuizSerie"
+                    id="btnIniciarQuizSerie" class="radio" value="Difícil">Difícil</span>
+        </div>
+
+        <!-- <button id="btnIniciarQuizSerieFacil" onclick="iniciarQuizSerie()" value="Fácil">Fácil</button>
+        <button id="btnIniciarQuizSerieMedio" onclick="iniciarQuizSerie()" value="Médio">Médio</button>
+        <button id="btnIniciarQuizSerieDificil" onclick="iniciarQuizSerie()" value="Difícil">Difícil</button> -->
 
         <div id="pontuacaoSerie" class="flex-colunar width-fit-content border-primary">
             <div id="pontuacaoDuranteJogoSerie" class="flex-colunar padding-8">
@@ -81,15 +93,11 @@
             <div id="infoQuestaoSerie" class="padding-8">
                 <span>Questão atual: <span id="spanNumeroDaQuestaoAtualSerie"></span> de <span
                         id="qtdQuestoesSerie"></span>
-                    questões.</span>
+                    questões</span>
             </div>
 
             <div id="perguntaDaQuestaoAtualSerie" class="padding-8">
                 <span id="spanQuestaoExibidaSerie" class="text-bold"></span>
-            </div>
-
-            <div id="infoAlternativasSerie" class="padding-8">
-                <span><em>Escolha uma opção dentre as abaixo:</em></span>
             </div>
 
             <div id="opcoesSerie" class="flex-colunar padding-8">
@@ -118,14 +126,20 @@
                 <button onclick="tentarNovamenteSerie()" id="btnTentarNovamenteSerie" disabled>Tentar novamente</button>
             </div>
 
+            <div id="botoesNovos" class="flex-colunar padding-8">
+                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                <button onclick="tentarNovamenteSerie()" id="btnTentarNovamenteSerie2" disabled>Tentar
+                    novamente</button>
+                <button id="btnIniciarQuizMatematica" onclick="iniciarQuizMatematica()">Iniciar quiz matemática</button>
+            </div>
+
         </div>
-    </div>
 
 
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-    <div id="pontuacaoEJogoMatematica">
-        <button id="btnIniciarQuizMatematica" onclick="iniciarQuizMatematica()">INICIAR QUIZ MATEMÁTICA</button>
+        <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
 
         <div id="pontuacaoMatematica" class="flex-colunar width-fit-content border-primary">
             <div id="pontuacaoDuranteJogoMatematica" class="flex-colunar padding-8">
@@ -150,10 +164,6 @@
 
             <div id="perguntaDaQuestaoAtualMatematica" class="padding-8">
                 <span id="spanQuestaoExibidaMatematica" class="text-bold"></span>
-            </div>
-
-            <div id="infoAlternativasMatematica" class="padding-8">
-                <span><em>Escolha uma opção dentre as abaixo:</em></span>
             </div>
 
             <div id="opcoesMatematica" class="flex-colunar padding-8">
@@ -196,339 +206,275 @@
 </html>
 <script>
 
-    const listaDeQuestoesSerie = [
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    const listaDeQuestoesSerieFacil = [
         {
-            pergunta: "Qual é o nome do meio de Sheldon Cooper?",
-            alternativaA: "Lee",
-            alternativaB: "Lyndon",
-            alternativaC: "Leonard",
-            alternativaD: "Lester",
-            alternativaCorreta: "alternativaA"
+            "pergunta": "Em qual universidade a maioria dos personagens masculinos trabalha?",
+            "alternativaA": "MIT",
+            "alternativaB": "Stanford",
+            "alternativaC": "Caltech",
+            "alternativaD": "Harvard",
+            "alternativaCorreta": "alternativaC"
         },
         {
-            pergunta: "Em qual universidade a maioria dos personagens masculinos trabalha?",
-            alternativaA: "MIT",
-            alternativaB: "Stanford",
-            alternativaC: "Caltech",
-            alternativaD: "Harvard",
-            alternativaCorreta: "alternativaC"
+            "pergunta": "Qual destes personagens é um engenheiro e, por muito tempo, foi o único do grupo sem um doutorado?",
+            "alternativaA": "Leonard Hofstadter",
+            "alternativaB": "Sheldon Cooper",
+            "alternativaC": "Rajesh Koothrappali",
+            "alternativaD": "Howard Wolowitz",
+            "alternativaCorreta": "alternativaD"
         },
         {
-            pergunta: "Qual é o instrumento que Sheldon toca ocasionalmente na série?",
-            alternativaA: "Violino",
-            alternativaB: "Piano",
-            alternativaC: "Harpa",
-            alternativaD: "Teremim",
-            alternativaCorreta: "alternativaD"
+            "pergunta": "Qual é a música que Sheldon pede para Penny cantar quando ele está doente?",
+            "alternativaA": "Soft Kitty",
+            "alternativaB": "Little Cat",
+            "alternativaC": "Sleepy Tiger",
+            "alternativaD": "Warm Kitty",
+            "alternativaCorreta": "alternativaA"
         },
         {
-            pergunta: "Qual é o estado de origem de Penny?",
-            alternativaA: "Kansas",
-            alternativaB: "Nebraska",
-            alternativaC: "Iowa",
-            alternativaD: "Oklahoma",
-            alternativaCorreta: "alternativaB"
+            "pergunta": "Qual é o número do apartamento de Leonard e Sheldon?",
+            "alternativaA": "3A",
+            "alternativaB": "4A",
+            "alternativaC": "4B",
+            "alternativaD": "5A",
+            "alternativaCorreta": "alternativaB"
         },
         {
-            pergunta: "Qual destes personagens é um engenheiro e, por muito tempo, foi o único do grupo sem um doutorado?",
-            alternativaA: "Leonard Hofstadter",
-            alternativaB: "Sheldon Cooper",
-            alternativaC: "Rajesh Koothrappali",
-            alternativaD: "Howard Wolowitz",
-            alternativaCorreta: "alternativaD"
-        },
-        {
-            pergunta: "Qual é a profissão de Bernadette Rostenkowski-Wolowitz?",
-            alternativaA: "Neurobiologista",
-            alternativaB: "Microbiologista",
-            alternativaC: "Física experimental",
-            alternativaD: "Astrônoma",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual é a música que Sheldon pede para Penny cantar quando ele está doente?",
-            alternativaA: "Soft Kitty",
-            alternativaB: "Little Cat",
-            alternativaC: "Sleepy Tiger",
-            alternativaD: "Warm Kitty",
-            alternativaCorreta: "alternativaA"
-        },
-        {
-            pergunta: "Qual é o apelido de astronauta que Howard recebeu no espaço?",
-            alternativaA: "Rocket Man",
-            alternativaB: "Froot Loops",
-            alternativaC: "Iron Man",
-            alternativaD: "Space Cowboy",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual é o nome do programa de internet que Sheldon e Amy apresentam juntos?",
-            alternativaA: "Science with Sheldon",
-            alternativaB: "Fun with Physics",
-            alternativaC: "Dr. Sheldon Cooper's Fun with Flags",
-            alternativaD: "The Vexillology Show",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Qual objeto de colecionador os quatro amigos compram juntos em um leilão online na 1ª temporada?",
-            alternativaA: "O anel do Frodo",
-            alternativaB: "O cinto de utilidades do Batman",
-            alternativaC: "Uma máquina do tempo (réplica)",
-            alternativaD: "Um sabre de luz original",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Qual é o número do apartamento de Leonard e Sheldon?",
-            alternativaA: "3A",
-            alternativaB: "4A",
-            alternativaC: "4B",
-            alternativaD: "5A",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual é o nome da loja de quadrinhos frequentada pelo grupo e quem é seu dono?",
-            alternativaA: "The Comic Center, dono Stuart",
-            alternativaB: "Nerd Haven, dono Stuart",
-            alternativaC: "Geek Paradise, dono Bert",
-            alternativaD: "Comic Book Central, dono Zack",
-            alternativaCorreta: "alternativaA"
-        },
-        {
-            pergunta: "Qual prêmio Sheldon e Amy ganham juntos no final da série?",
-            alternativaA: "Medalha Fields",
-            alternativaB: "Prêmio Nobel de Física",
-            alternativaC: "Prêmio Breakthrough",
-            alternativaD: "Prêmio Wolf",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Por que o elevador do prédio dos personagens ficou quebrado por quase toda a série?",
-            alternativaA: "Desgaste natural",
-            alternativaB: "Experimento de Howard com um foguete",
-            alternativaC: "Experimento de Leonard com combustível de foguete",
-            alternativaD: "Sheldon testando a gravidade",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Qual é o nome da cadela de estimação de Raj?",
-            alternativaA: "Cinnamon",
-            alternativaB: "Ginger",
-            alternativaC: "Pepper",
-            alternativaD: "Nutmeg",
-            alternativaCorreta: "alternativaA"
-        },
-        {
-            pergunta: "Qual ator de Star Trek era o 'inimigo mortal' de Sheldon antes de se tornarem amigos?",
-            alternativaA: "William Shatner",
-            alternativaB: "Leonard Nimoy",
-            alternativaC: "George Takei",
-            alternativaD: "Wil Wheaton",
-            alternativaCorreta: "alternativaD"
-        },
-        {
-            pergunta: "Quantas temporadas a série The Big Bang Theory teve no total?",
-            alternativaA: "10",
-            alternativaB: "11",
-            alternativaC: "12",
-            alternativaD: "13",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "O Contrato de Colegas de Quarto diz que, se um ganhar superpoderes, deve nomear o outro como:",
-            alternativaA: "Inimigo",
-            alternativaB: "Mestre",
-            alternativaC: "Ajudante (sidekick)",
-            alternativaD: "Suplente",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Qual é a comida que o grupo come às quintas-feiras no cronograma de Sheldon?",
-            alternativaA: "Comida Chinesa",
-            alternativaB: "Noite da Pizza",
-            alternativaC: "Comida Tailandesa",
-            alternativaD: "Noite do Hambúrguer",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Qual é o nome do jogo de cartas colecionáveis fictício que os rapazes jogam?",
-            alternativaA: "Magic: The Gathering",
-            alternativaB: "Mystic Warlords of Ka'a",
-            alternativaC: "Dungeons & Dragons",
-            alternativaD: "World of Warcraft",
-            alternativaCorreta: "alternativaB"
+            "pergunta": "Quantas temporadas a série The Big Bang Theory teve no total?",
+            "alternativaA": "10",
+            "alternativaB": "11",
+            "alternativaC": "12",
+            "alternativaD": "13",
+            "alternativaCorreta": "alternativaC"
         }
     ];
 
-
-
-    const listaDeQuestoesMatematica = [
+    const listaDeQuestoesSerieMedia = [
         {
-            pergunta: "Se a soma de dois números é 45 e a diferença entre eles é 9, qual é o maior?",
-            alternativaA: "18",
-            alternativaB: "23",
-            alternativaC: "27",
-            alternativaD: "36",
-            alternativaCorreta: "alternativaC"
+            "pergunta": "Qual é o estado de origem de Penny?",
+            "alternativaA": "Kansas",
+            "alternativaB": "Nebraska",
+            "alternativaC": "Iowa",
+            "alternativaD": "Oklahoma",
+            "alternativaCorreta": "alternativaB"
         },
         {
-            pergunta: "Um produto com 20% de desconto custa R$ 80,00. Qual era o valor original?",
-            alternativaA: "R$ 96,00",
-            alternativaB: "R$ 100,00",
-            alternativaC: "R$ 110,00",
-            alternativaD: "R$ 120,00",
-            alternativaCorreta: "alternativaB"
+            "pergunta": "Qual é a profissão de Bernadette Rostenkowski-Wolowitz?",
+            "alternativaA": "Neurobiologista",
+            "alternativaB": "Microbiologista",
+            "alternativaC": "Física experimental",
+            "alternativaD": "Astrônoma",
+            "alternativaCorreta": "alternativaB"
         },
         {
-            pergunta: "Se 3 elevado a x é igual a 81 (3^x = 81), qual o valor de x?",
-            alternativaA: "2",
-            alternativaB: "3",
-            alternativaC: "4",
-            alternativaD: "5",
-            alternativaCorreta: "alternativaC"
+            "pergunta": "Qual é o apelido de astronauta que Howard recebeu no espaço?",
+            "alternativaA": "Rocket Man",
+            "alternativaB": "Froot Loops",
+            "alternativaC": "Iron Man",
+            "alternativaD": "Space Cowboy",
+            "alternativaCorreta": "alternativaB"
         },
         {
-            pergunta: "Em uma urna há 5 bolas azuis e 3 vermelhas. Qual a chance de tirar uma vermelha?",
-            alternativaA: "3/5",
-            alternativaB: "5/8",
-            alternativaC: "3/8",
-            alternativaD: "1/2",
-            alternativaCorreta: "alternativaC"
+            "pergunta": "Qual é o nome do programa de internet que Sheldon e Amy apresentam juntos?",
+            "alternativaA": "Science with Sheldon",
+            "alternativaB": "Fun with Physics",
+            "alternativaC": "Dr. Sheldon Cooper's Fun with Flags",
+            "alternativaD": "The Vexillology Show",
+            "alternativaCorreta": "alternativaC"
         },
         {
-            pergunta: "Um triângulo retângulo tem catetos de 6cm e 8cm. Qual a hipotenusa?",
-            alternativaA: "9 cm",
-            alternativaB: "10 cm",
-            alternativaC: "12 cm",
-            alternativaD: "14 cm",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Quantos números ímpares existem entre 10 e 30?",
-            alternativaA: "9",
-            alternativaB: "10",
-            alternativaC: "11",
-            alternativaD: "12",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual a média aritmética dos números 12, 15, 18 e 27?",
-            alternativaA: "16",
-            alternativaB: "17",
-            alternativaC: "18",
-            alternativaD: "20",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Se um carro faz 12km com 1 litro, quanto gastará para percorrer 150km?",
-            alternativaA: "12L",
-            alternativaB: "12,5L",
-            alternativaC: "13L",
-            alternativaD: "14L",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Resolva a equação: 2x + 7 = 3x - 5. Qual o valor de x?",
-            alternativaA: "5",
-            alternativaB: "7",
-            alternativaC: "10",
-            alternativaD: "12",
-            alternativaCorreta: "alternativaD"
-        },
-        {
-            pergunta: "Qual a área de um círculo com raio de 3m? (Considere pi = 3,14)",
-            alternativaA: "9,42 m²",
-            alternativaB: "18,84 m²",
-            alternativaC: "28,26 m²",
-            alternativaD: "31,40 m²",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Se 4 máquinas produzem 800 peças, quantas 6 máquinas produzirão?",
-            alternativaA: "1000",
-            alternativaB: "1200",
-            alternativaC: "1400",
-            alternativaD: "1600",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual o resultado de √144 + √64?",
-            alternativaA: "18",
-            alternativaB: "20",
-            alternativaC: "22",
-            alternativaD: "24",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Escada de 5m encostada a 3m da parede. Qual a altura que ela atinge?",
-            alternativaA: "3,5m",
-            alternativaB: "4m",
-            alternativaC: "4,5m",
-            alternativaD: "4,8m",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Quanto é 2^0 + 2^1 + 2^2 + 2^3?",
-            alternativaA: "14",
-            alternativaB: "15",
-            alternativaC: "16",
-            alternativaD: "17",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Se o perímetro de um retângulo é 30cm e a largura é 5cm, qual o comprimento?",
-            alternativaA: "5 cm",
-            alternativaB: "10 cm",
-            alternativaC: "15 cm",
-            alternativaD: "20 cm",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Em um grupo de 50 pessoas, 60% gostam de futebol. Quantas NÃO gostam?",
-            alternativaA: "15",
-            alternativaB: "20",
-            alternativaC: "25",
-            alternativaD: "30",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Juros simples: R$ 1.000 a 2% ao mês. Qual o total após 3 meses?",
-            alternativaA: "R$ 1.040,00",
-            alternativaB: "R$ 1.060,00",
-            alternativaC: "R$ 1.080,00",
-            alternativaD: "R$ 1.100,00",
-            alternativaCorreta: "alternativaB"
-        },
-        {
-            pergunta: "Qual o valor da expressão (10 - 2 * 3)^2?",
-            alternativaA: "16",
-            alternativaB: "25",
-            alternativaC: "36",
-            alternativaD: "64",
-            alternativaCorreta: "alternativaA"
-        },
-        {
-            pergunta: "Um ângulo suplementar a 70° mede quanto?",
-            alternativaA: "20°",
-            alternativaB: "90°",
-            alternativaC: "110°",
-            alternativaD: "180°",
-            alternativaCorreta: "alternativaC"
-        },
-        {
-            pergunta: "Se x/4 = 9/6, qual o valor de x?",
-            alternativaA: "4",
-            alternativaB: "5",
-            alternativaC: "6",
-            alternativaD: "8",
-            alternativaCorreta: "alternativaC"
+            "pergunta": "Qual prêmio Sheldon e Amy ganham juntos no final da série?",
+            "alternativaA": "Medalha Fields",
+            "alternativaB": "Prêmio Nobel de Física",
+            "alternativaC": "Prêmio Breakthrough",
+            "alternativaD": "Prêmio Wolf",
+            "alternativaCorreta": "alternativaB"
         }
     ];
 
-    // variáveis globais    
+    const listaDeQuestoesSerieDificil = [
+        {
+            "pergunta": "Qual é o nome do meio de Sheldon Cooper?",
+            "alternativaA": "Lee",
+            "alternativaB": "Lyndon",
+            "alternativaC": "Leonard",
+            "alternativaD": "Lester",
+            "alternativaCorreta": "alternativaA"
+        },
+        {
+            "pergunta": "Por que o elevador do prédio dos personagens ficou quebrado por quase toda a série?",
+            "alternativaA": "Desgaste natural",
+            "alternativaB": "Experimento de Howard com um foguete",
+            "alternativaC": "Experimento de Leonard com combustível de foguete",
+            "alternativaD": "Sheldon testando a gravidade",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "O Contrato de Colegas de Quarto diz que, se um ganhar superpoderes, deve nomear o outro como:",
+            "alternativaA": "Inimigo",
+            "alternativaB": "Mestre",
+            "alternativaC": "Ajudante (sidekick)",
+            "alternativaD": "Suplente",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Qual é a comida que o grupo come às quintas-feiras no cronograma de Sheldon?",
+            "alternativaA": "Comida Chinesa",
+            "alternativaB": "Noite da Pizza",
+            "alternativaC": "Comida Tailandesa",
+            "alternativaD": "Noite do Hambúrguer",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Qual é o nome do jogo de cartas colecionáveis fictício que os rapazes jogam?",
+            "alternativaA": "Magic: The Gathering",
+            "alternativaB": "Mystic Warlords of Ka'a",
+            "alternativaC": "Dungeons & Dragons",
+            "alternativaD": "World of Warcraft",
+            "alternativaCorreta": "alternativaB"
+        }
+    ];
+
+    const listaDeQuestoesMatematicaFacil = [
+        {
+            "pergunta": "Quantos números ímpares existem entre 10 e 30?",
+            "alternativaA": "9",
+            "alternativaB": "10",
+            "alternativaC": "11",
+            "alternativaD": "12",
+            "alternativaCorreta": "alternativaB"
+        },
+        {
+            "pergunta": "Qual o resultado de √144 + √64?",
+            "alternativaA": "18",
+            "alternativaB": "20",
+            "alternativaC": "22",
+            "alternativaD": "24",
+            "alternativaCorreta": "alternativaB"
+        },
+        {
+            "pergunta": "Em um grupo de 50 pessoas, 60% gostam de futebol. Quantas NÃO gostam?",
+            "alternativaA": "15",
+            "alternativaB": "20",
+            "alternativaC": "25",
+            "alternativaD": "30",
+            "alternativaCorreta": "alternativaB"
+        },
+        {
+            "pergunta": "Qual o valor da expressão (10 - 2 * 3)^2?",
+            "alternativaA": "16",
+            "alternativaB": "25",
+            "alternativaC": "36",
+            "alternativaD": "64",
+            "alternativaCorreta": "alternativaA"
+        },
+        {
+            "pergunta": "Um ângulo suplementar a 70° mede quanto?",
+            "alternativaA": "20°",
+            "alternativaB": "90°",
+            "alternativaC": "110°",
+            "alternativaD": "180°",
+            "alternativaCorreta": "alternativaC"
+        }
+    ];
+
+    const listaDeQuestoesMatematicaMedia = [
+        {
+            "pergunta": "Se 3 elevado a x é igual a 81 (3^x = 81), qual o valor de x?",
+            "alternativaA": "2",
+            "alternativaB": "3",
+            "alternativaC": "4",
+            "alternativaD": "5",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Em uma urna há 5 bolas azuis e 3 vermelhas. Qual a chance de tirar uma vermelha?",
+            "alternativaA": "3/5",
+            "alternativaB": "5/8",
+            "alternativaC": "3/8",
+            "alternativaD": "1/2",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Um triângulo retângulo tem catetos de 6cm e 8cm. Qual a hipotenusa?",
+            "alternativaA": "9 cm",
+            "alternativaB": "10 cm",
+            "alternativaC": "12 cm",
+            "alternativaD": "14 cm",
+            "alternativaCorreta": "alternativaB"
+        },
+        {
+            "pergunta": "Qual a média aritmética dos números 12, 15, 18 e 27?",
+            "alternativaA": "16",
+            "alternativaB": "17",
+            "alternativaC": "18",
+            "alternativaD": "20",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Se 4 máquinas produzem 800 peças, quantas 6 máquinas produzirão?",
+            "alternativaA": "1000",
+            "alternativaB": "1200",
+            "alternativaC": "1400",
+            "alternativaD": "1600",
+            "alternativaCorreta": "alternativaB"
+        }
+    ];
+
+    const listaDeQuestoesMatematicaDificil = [
+        {
+            "pergunta": "Se a soma de dois números é 45 e a diferença entre eles é 9, qual é o maior?",
+            "alternativaA": "18",
+            "alternativaB": "23",
+            "alternativaC": "27",
+            "alternativaD": "36",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Um produto com 20% de desconto custa R$ 80,00. Qual era o valor original?",
+            "alternativaA": "R$ 96,00",
+            "alternativaB": "R$ 100,00",
+            "alternativaC": "R$ 110,00",
+            "alternativaD": "R$ 120,00",
+            "alternativaCorreta": "alternativaB"
+        },
+        {
+            "pergunta": "Resolva a equação: 2x + 7 = 3x - 5. Qual o valor de x?",
+            "alternativaA": "5",
+            "alternativaB": "7",
+            "alternativaC": "10",
+            "alternativaD": "12",
+            "alternativaCorreta": "alternativaD"
+        },
+        {
+            "pergunta": "Qual a área de um círculo com raio de 3m? (Considere pi = 3,14)",
+            "alternativaA": "9,42 m²",
+            "alternativaB": "18,84 m²",
+            "alternativaC": "28,26 m²",
+            "alternativaD": "31,40 m²",
+            "alternativaCorreta": "alternativaC"
+        },
+        {
+            "pergunta": "Juros simples: R$ 1.000 a 2% ao mês. Qual o total após 3 meses?",
+            "alternativaA": "R$ 1.040,00",
+            "alternativaB": "R$ 1.060,00",
+            "alternativaC": "R$ 1.080,00",
+            "alternativaD": "R$ 1.100,00",
+            "alternativaCorreta": "alternativaB"
+        }
+    ];
+
+    // variáveis globais  
+    let tipoNivel = "";
+
     let numeroDaQuestaoAtualSerie = 0
     let pontuacaoFinalSerie = 0;
     let certasSerie = 0
-    let quantidadeDeQuestoesSerie = listaDeQuestoesSerie.length
+    let quantidadeDeQuestoesSerieFacil = listaDeQuestoesSerieFacil.length;
+    let quantidadeDeQuestoesSerieMedia = listaDeQuestoesSerieMedia.length;
+    let quantidadeDeQuestoesSerieDificil = listaDeQuestoesSerieDificil.length;
     // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
@@ -536,15 +482,26 @@
         document.getElementById('jogoSerie').style.display = "none"
         document.getElementById('pontuacaoMatematica').style.display = "none"
         document.getElementById('jogoMatematica').style.display = "none"
-        document.getElementById('btnIniciarQuizMatematica').style.display = "none"
+        document.getElementById('botoesNovos').style.display = "none";
+
     }
 
     function iniciarQuizSerie() {
-        document.getElementById('pontuacaoSerie').style.display = "flex"
         document.getElementById('jogoSerie').style.display = "flex"
-        document.getElementById('btnIniciarQuizSerie').style.display = "none"
+        document.getElementById('escolherNivel').style.display = "none"
 
-        document.getElementById('qtdQuestoesSerie').innerHTML = quantidadeDeQuestoesSerie
+        let radioSelecionado = document.querySelector('input[name="btnIniciarQuizSerie"]:checked');
+        tipoNivel = radioSelecionado.value;
+
+        if (tipoNivel == "Fácil") {
+            document.getElementById('qtdQuestoesSerie').innerHTML = quantidadeDeQuestoesSerieFacil
+
+        } else if (tipoNivel == "Médio") {
+            document.getElementById('qtdQuestoesSerie').innerHTML = quantidadeDeQuestoesSerieMedia
+
+        } else if (tipoNivel == "Difícil") {
+            document.getElementById('qtdQuestoesSerie').innerHTML = quantidadeDeQuestoesSerieDificil
+        }
 
         preencherHTMLcomQuestaoAtualSerie(0)
 
@@ -555,17 +512,46 @@
     }
 
     function preencherHTMLcomQuestaoAtualSerie(index) {
-        habilitarAlternativasSerie(true)
-        const questaoAtualSerie = listaDeQuestoesSerie[index]
-        numeroDaQuestaoAtualSerie = index
-        console.log("questaoAtualSerie")
-        console.log(questaoAtualSerie)
-        document.getElementById("spanNumeroDaQuestaoAtualSerie").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibidaSerie").innerHTML = questaoAtualSerie.pergunta;
-        document.getElementById("labelOpcaoUmSerie").innerHTML = questaoAtualSerie.alternativaA;
-        document.getElementById("labelOpcaoDoisSerie").innerHTML = questaoAtualSerie.alternativaB;
-        document.getElementById("labelOpcaoTresSerie").innerHTML = questaoAtualSerie.alternativaC;
-        document.getElementById("labelOpcaoQuatroSerie").innerHTML = questaoAtualSerie.alternativaD;
+        if (tipoNivel == "Fácil") {
+            habilitarAlternativasSerie(true)
+            const questaoAtualSerie = listaDeQuestoesSerieFacil[index]
+            numeroDaQuestaoAtualSerie = index
+            console.log("questaoAtualSerie")
+            console.log(questaoAtualSerie)
+            document.getElementById("spanNumeroDaQuestaoAtualSerie").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaSerie").innerHTML = questaoAtualSerie.pergunta;
+            document.getElementById("labelOpcaoUmSerie").innerHTML = questaoAtualSerie.alternativaA;
+            document.getElementById("labelOpcaoDoisSerie").innerHTML = questaoAtualSerie.alternativaB;
+            document.getElementById("labelOpcaoTresSerie").innerHTML = questaoAtualSerie.alternativaC;
+            document.getElementById("labelOpcaoQuatroSerie").innerHTML = questaoAtualSerie.alternativaD;
+
+        } else if (tipoNivel == "Médio") {
+            habilitarAlternativasSerie(true)
+            const questaoAtualSerie = listaDeQuestoesSerieMedia[index]
+            numeroDaQuestaoAtualSerie = index
+            console.log("questaoAtualSerie")
+            console.log(questaoAtualSerie)
+            document.getElementById("spanNumeroDaQuestaoAtualSerie").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaSerie").innerHTML = questaoAtualSerie.pergunta;
+            document.getElementById("labelOpcaoUmSerie").innerHTML = questaoAtualSerie.alternativaA;
+            document.getElementById("labelOpcaoDoisSerie").innerHTML = questaoAtualSerie.alternativaB;
+            document.getElementById("labelOpcaoTresSerie").innerHTML = questaoAtualSerie.alternativaC;
+            document.getElementById("labelOpcaoQuatroSerie").innerHTML = questaoAtualSerie.alternativaD;
+
+        } else if (tipoNivel == "Difícil") {
+            habilitarAlternativasSerie(true)
+            const questaoAtualSerie = listaDeQuestoesSerieDificil[index]
+            numeroDaQuestaoAtualSerie = index
+            console.log("questaoAtualSerie")
+            console.log(questaoAtualSerie)
+            document.getElementById("spanNumeroDaQuestaoAtualSerie").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaSerie").innerHTML = questaoAtualSerie.pergunta;
+            document.getElementById("labelOpcaoUmSerie").innerHTML = questaoAtualSerie.alternativaA;
+            document.getElementById("labelOpcaoDoisSerie").innerHTML = questaoAtualSerie.alternativaB;
+            document.getElementById("labelOpcaoTresSerie").innerHTML = questaoAtualSerie.alternativaC;
+            document.getElementById("labelOpcaoQuatroSerie").innerHTML = questaoAtualSerie.alternativaD;
+        }
+
     }
 
     function submeterSerie() {
@@ -602,58 +588,163 @@
     }
 
     function avancarSerie() {
-        btnProxSerie.disabled = true
-        btnSubmeterSerie.disabled = false
+        if (tipoNivel == "Fácil") {
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = false
 
-        desmarcarRadioButtonsSerie()
+            desmarcarRadioButtonsSerie()
 
-        if (numeroDaQuestaoAtualSerie < quantidadeDeQuestoesSerie - 1) {
-            preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
-        } else if (numeroDaQuestaoAtualSerie == quantidadeDeQuestoesSerie - 1) {
-            alert("Atenção... a próxima é a ultima questão!")
-            preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
-        } else {
-            finalizarJogoSerie()
+            if (numeroDaQuestaoAtualSerie < quantidadeDeQuestoesSerieFacil - 1) {
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else if (numeroDaQuestaoAtualSerie == quantidadeDeQuestoesSerieFacil - 1) {
+                alert("Atenção... a próxima é a ultima questão sobre a série!")
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else {
+                finalizarJogoSerie()
+            }
+            limparCoresBackgroundOpcoesSerie()
+
+        } else if (tipoNivel == "Médio") {
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = false
+
+            desmarcarRadioButtonsSerie()
+
+            if (numeroDaQuestaoAtualSerie < quantidadeDeQuestoesSerieMedia - 1) {
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else if (numeroDaQuestaoAtualSerie == quantidadeDeQuestoesSerieMedia - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else {
+                finalizarJogoSerie()
+            }
+            limparCoresBackgroundOpcoesSerie()
+
+        } else if (tipoNivel == "Difícil") {
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = false
+
+            desmarcarRadioButtonsSerie()
+
+            if (numeroDaQuestaoAtualSerie < quantidadeDeQuestoesSerieDificil - 1) {
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else if (numeroDaQuestaoAtualSerie == quantidadeDeQuestoesSerieDificil - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtualSerie(numeroDaQuestaoAtualSerie)
+            } else {
+                finalizarJogoSerie()
+            }
+            limparCoresBackgroundOpcoesSerie()
         }
-        limparCoresBackgroundOpcoesSerie()
+
     }
 
     function tentarNovamenteSerie() {
         // atualiza a página
+        tipoNivel = "";
+        tipoNivel = "";
+        tipoNivel = "";
         window.location.reload()
     }
 
     function checarRespostaSerie() {
-        const questaoAtual = listaDeQuestoesSerie[numeroDaQuestaoAtualSerie] // questão atual 
-        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+        if (tipoNivel == "Fácil") {
+            const questaoAtual = listaDeQuestoesSerieFacil[numeroDaQuestaoAtualSerie] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
 
-        const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
+            const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
 
-        let alternativaCorreta = null // variável para armazenar a alternativa correta
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
 
-        optionsSerie.forEach((option) => {
-            if (option.value === respostaQuestaoAtual) {
-                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
-                alternativaCorreta = option.labels[0].id
-            }
-        })
+            optionsSerie.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
 
-        // verifica se resposta assinalada é correta
-        optionsSerie.forEach((option) => {
-            if (option.checked === true && option.value === respostaQuestaoAtual) {
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                pontuacaoFinalSerie++
-                certasSerie++
-                document.getElementById("spanCertasSerie").innerHTML = certasSerie
-                numeroDaQuestaoAtualSerie++
-            } else if (option.checked && option.value !== respostaQuestaoAtual) {
-                const wrongLabelId = option.labels[0].id
+            // verifica se resposta assinalada é correta
+            optionsSerie.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalSerie++
+                    certasSerie++
+                    document.getElementById("spanCertasSerie").innerHTML = certasSerie
+                    numeroDaQuestaoAtualSerie++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
 
-                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                numeroDaQuestaoAtualSerie++
-            }
-        })
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualSerie++
+                }
+            })
+
+        } else if (tipoNivel == "Médio") {
+            const questaoAtual = listaDeQuestoesSerieMedia[numeroDaQuestaoAtualSerie] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+            const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
+
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+            optionsSerie.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
+
+            // verifica se resposta assinalada é correta
+            optionsSerie.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalSerie++
+                    certasSerie++
+                    document.getElementById("spanCertasSerie").innerHTML = certasSerie
+                    numeroDaQuestaoAtualSerie++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
+
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualSerie++
+                }
+            })
+
+        } else if (tipoNivel == "Difícil") {
+            const questaoAtual = listaDeQuestoesSerieDificil[numeroDaQuestaoAtualSerie] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+            const optionsSerie = document.getElementsByName("optionSerie"); // recupera alternativas no html
+
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+            optionsSerie.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
+
+            // verifica se resposta assinalada é correta
+            optionsSerie.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalSerie++
+                    certasSerie++
+                    document.getElementById("spanCertasSerie").innerHTML = certasSerie
+                    numeroDaQuestaoAtualSerie++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
+
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualSerie++
+                }
+            })
+        }
+
     }
 
     function limparCoresBackgroundOpcoesSerie() {
@@ -672,38 +763,115 @@
     }
 
     function finalizarJogoSerie() {
-        let textoParaMensagemFinalSerie = null
-        let classComCoresParaMensagemFinalSerie = null
-        const porcentagemFinalDeAcertosSerie = pontuacaoFinalSerie / quantidadeDeQuestoesSerie
+        if (tipoNivel == "Fácil") {
+            let textoParaMensagemFinalSerie = null
+            let classComCoresParaMensagemFinalSerie = null
+            const porcentagemFinalDeAcertosSerie = pontuacaoFinalSerie / quantidadeDeQuestoesSerieFacil
 
-        if (porcentagemFinalDeAcertosSerie <= 0.3) {
-            textoParaMensagemFinalSerie = "Parece que você não estudou..."
-            classComCoresParaMensagemFinalSerie = "text-danger-with-bg"
+            if (porcentagemFinalDeAcertosSerie <= 0.3) {
+                textoParaMensagemFinalSerie = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalSerie = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie > 0.3 && porcentagemFinalDeAcertosSerie < 0.9) {
+                textoParaMensagemFinalSerie = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalSerie = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie >= 0.9) {
+                textoParaMensagemFinalSerie = "Uau, parabéns!"
+                classComCoresParaMensagemFinalSerie = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalSerie += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosSerie) * 100) + "% das questões da série."
+
+
+            document.getElementById('msgFinalSerie').innerHTML = textoParaMensagemFinalSerie
+            document.getElementById('msgFinalSerie').classList.add(classComCoresParaMensagemFinalSerie)
+            document.getElementById('spanPontuacaoFinalSerie').innerHTML = pontuacaoFinalSerie
+
+            document.getElementById('jogoSerie').classList.add("text-new-gray")
+
+            document.getElementById('botoesSerie').style.display = "none";
+            document.getElementById('botoesNovos').style.display = "flex";
+
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteSerie2.disabled = false
+
+
+        } else if (tipoNivel == "Médio") {
+            let textoParaMensagemFinalSerie = null
+            let classComCoresParaMensagemFinalSerie = null
+            const porcentagemFinalDeAcertosSerie = pontuacaoFinalSerie / quantidadeDeQuestoesSerieMedia
+
+            if (porcentagemFinalDeAcertosSerie <= 0.3) {
+                textoParaMensagemFinalSerie = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalSerie = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie > 0.3 && porcentagemFinalDeAcertosSerie < 0.9) {
+                textoParaMensagemFinalSerie = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalSerie = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie >= 0.9) {
+                textoParaMensagemFinalSerie = "Uau, parabéns!"
+                classComCoresParaMensagemFinalSerie = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalSerie += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosSerie) * 100) + "% das questões da série."
+
+
+            document.getElementById('msgFinalSerie').innerHTML = textoParaMensagemFinalSerie
+            document.getElementById('msgFinalSerie').classList.add(classComCoresParaMensagemFinalSerie)
+            document.getElementById('spanPontuacaoFinalSerie').innerHTML = pontuacaoFinalSerie
+
+            document.getElementById('jogoSerie').classList.add("text-new-gray")
+
+            document.getElementById('botoesSerie').style.display = "none";
+            document.getElementById('botoesNovos').style.display = "flex";
+
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteSerie2.disabled = false
+
+
+        } else if (tipoNivel == "Difícil") {
+            let textoParaMensagemFinalSerie = null
+            let classComCoresParaMensagemFinalSerie = null
+            const porcentagemFinalDeAcertosSerie = pontuacaoFinalSerie / quantidadeDeQuestoesSerieDificil
+
+            if (porcentagemFinalDeAcertosSerie <= 0.3) {
+                textoParaMensagemFinalSerie = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalSerie = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie > 0.3 && porcentagemFinalDeAcertosSerie < 0.9) {
+                textoParaMensagemFinalSerie = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalSerie = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosSerie >= 0.9) {
+                textoParaMensagemFinalSerie = "Uau, parabéns!"
+                classComCoresParaMensagemFinalSerie = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalSerie += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosSerie) * 100) + "% das questões da série."
+
+
+            document.getElementById('msgFinalSerie').innerHTML = textoParaMensagemFinalSerie
+            document.getElementById('msgFinalSerie').classList.add(classComCoresParaMensagemFinalSerie)
+            document.getElementById('spanPontuacaoFinalSerie').innerHTML = pontuacaoFinalSerie
+
+            document.getElementById('jogoSerie').classList.add("text-new-gray")
+
+            document.getElementById('botoesSerie').style.display = "none";
+            document.getElementById('botoesNovos').style.display = "flex";
+
+            btnProxSerie.disabled = true
+            btnSubmeterSerie.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteSerie2.disabled = false
+
         }
-        else if (porcentagemFinalDeAcertosSerie > 0.3 && porcentagemFinalDeAcertosSerie < 0.9) {
-            textoParaMensagemFinalSerie = "Pode melhorar na próxima, hein!"
-            classComCoresParaMensagemFinalSerie = "text-warning-with-bg"
-        }
-        else if (porcentagemFinalDeAcertosSerie >= 0.9) {
-            textoParaMensagemFinalSerie = "Uau, parabéns!"
-            classComCoresParaMensagemFinalSerie = "text-success-with-bg"
-        }
 
-        textoParaMensagemFinalSerie += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosSerie) * 100) + "% das questões da série."
-
-
-        document.getElementById('msgFinalSerie').innerHTML = textoParaMensagemFinalSerie
-        document.getElementById('msgFinalSerie').classList.add(classComCoresParaMensagemFinalSerie)
-        document.getElementById('spanPontuacaoFinalSerie').innerHTML = pontuacaoFinalSerie
-
-        document.getElementById('jogoSerie').classList.add("text-new-gray")
-
-        document.getElementById('btnIniciarQuizMatematica').style.display = "flex"
-
-        btnProxSerie.disabled = true
-        btnSubmeterSerie.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamenteSerie.disabled = false
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -712,38 +880,103 @@
     let numeroDaQuestaoAtualMatematica = 0
     let pontuacaoFinalMatematica = 0;
     let certasMatematica = 0
-    let quantidadeDeQuestoesMatematica = listaDeQuestoesMatematica.length
+    let quantidadeDeQuestoesMatematicaFacil = listaDeQuestoesMatematicaFacil.length
+    let quantidadeDeQuestoesMatematicaMedia = listaDeQuestoesMatematicaMedia.length
+    let quantidadeDeQuestoesMatematicaDificil = listaDeQuestoesMatematicaDificil.length
     // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function iniciarQuizMatematica() {
-        document.getElementById('pontuacaoMatematica').style.display = "flex"
-        document.getElementById('jogoMatematica').style.display = "flex"
-        document.getElementById('pontuacaoSerie').style.display = "none"
-        document.getElementById('jogoSerie').style.display = "none"
-        document.getElementById('btnIniciarQuizMatematica').style.display = "none"
+        if (tipoNivel == "Fácil") {
+            document.getElementById('jogoMatematica').style.display = "flex"
+            document.getElementById('pontuacaoSerie').style.display = "none"
+            document.getElementById('jogoSerie').style.display = "none"
+            document.getElementById('btnIniciarQuizMatematica').style.display = "none"
 
-        document.getElementById('qtdQuestoesMatematica').innerHTML = quantidadeDeQuestoesMatematica
+            document.getElementById('qtdQuestoesMatematica').innerHTML = quantidadeDeQuestoesMatematicaFacil
 
-        preencherHTMLcomQuestaoAtualMatematica(0)
+            preencherHTMLcomQuestaoAtualMatematica(0)
 
-        btnSubmeterMatematica.disabled = false
-        btnProxMatematica.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamenteMatematica.disabled = true
+            btnSubmeterMatematica.disabled = false
+            btnProxMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = true
+
+        } else if (tipoNivel == "Médio") {
+            document.getElementById('pontuacaoMatematica').style.display = "none"
+            document.getElementById('jogoMatematica').style.display = "flex"
+            document.getElementById('pontuacaoSerie').style.display = "none"
+            document.getElementById('jogoSerie').style.display = "none"
+            document.getElementById('btnIniciarQuizMatematica').style.display = "none"
+
+            document.getElementById('qtdQuestoesMatematica').innerHTML = quantidadeDeQuestoesMatematicaMedia
+
+            preencherHTMLcomQuestaoAtualMatematica(0)
+
+            btnSubmeterMatematica.disabled = false
+            btnProxMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = true
+
+        } else if (tipoNivel == "Difícil") {
+            document.getElementById('pontuacaoMatematica').style.display = "none"
+            document.getElementById('jogoMatematica').style.display = "flex"
+            document.getElementById('pontuacaoSerie').style.display = "none"
+            document.getElementById('jogoSerie').style.display = "none"
+            document.getElementById('btnIniciarQuizMatematica').style.display = "none"
+
+            document.getElementById('qtdQuestoesMatematica').innerHTML = quantidadeDeQuestoesMatematicaDificil
+
+            preencherHTMLcomQuestaoAtualMatematica(0)
+
+            btnSubmeterMatematica.disabled = false
+            btnProxMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = true
+        }
+
     }
 
     function preencherHTMLcomQuestaoAtualMatematica(index) {
-        habilitarAlternativasMatematica(true)
-        const questaoAtualMatematica = listaDeQuestoesMatematica[index]
-        numeroDaQuestaoAtualMatematica = index
-        console.log("questaoAtualMatematica")
-        console.log(questaoAtualMatematica)
-        document.getElementById("spanNumeroDaQuestaoAtualMatematica").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibidaMatematica").innerHTML = questaoAtualMatematica.pergunta;
-        document.getElementById("labelOpcaoUmMatematica").innerHTML = questaoAtualMatematica.alternativaA;
-        document.getElementById("labelOpcaoDoisMatematica").innerHTML = questaoAtualMatematica.alternativaB;
-        document.getElementById("labelOpcaoTresMatematica").innerHTML = questaoAtualMatematica.alternativaC;
-        document.getElementById("labelOpcaoQuatroMatematica").innerHTML = questaoAtualMatematica.alternativaD;
+        if (tipoNivel == "Fácil") {
+            habilitarAlternativasMatematica(true)
+            const questaoAtualMatematica = listaDeQuestoesMatematicaFacil[index]
+            numeroDaQuestaoAtualMatematica = index
+            console.log("questaoAtualMatematica")
+            console.log(questaoAtualMatematica)
+            document.getElementById("spanNumeroDaQuestaoAtualMatematica").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaMatematica").innerHTML = questaoAtualMatematica.pergunta;
+            document.getElementById("labelOpcaoUmMatematica").innerHTML = questaoAtualMatematica.alternativaA;
+            document.getElementById("labelOpcaoDoisMatematica").innerHTML = questaoAtualMatematica.alternativaB;
+            document.getElementById("labelOpcaoTresMatematica").innerHTML = questaoAtualMatematica.alternativaC;
+            document.getElementById("labelOpcaoQuatroMatematica").innerHTML = questaoAtualMatematica.alternativaD;
+
+        } else if (tipoNivel == "Médio") {
+            habilitarAlternativasMatematica(true)
+            const questaoAtualMatematica = listaDeQuestoesMatematicaMedia[index]
+            numeroDaQuestaoAtualMatematica = index
+            console.log("questaoAtualMatematica")
+            console.log(questaoAtualMatematica)
+            document.getElementById("spanNumeroDaQuestaoAtualMatematica").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaMatematica").innerHTML = questaoAtualMatematica.pergunta;
+            document.getElementById("labelOpcaoUmMatematica").innerHTML = questaoAtualMatematica.alternativaA;
+            document.getElementById("labelOpcaoDoisMatematica").innerHTML = questaoAtualMatematica.alternativaB;
+            document.getElementById("labelOpcaoTresMatematica").innerHTML = questaoAtualMatematica.alternativaC;
+            document.getElementById("labelOpcaoQuatroMatematica").innerHTML = questaoAtualMatematica.alternativaD;
+
+        } else if (tipoNivel == "Difícil") {
+            habilitarAlternativasMatematica(true)
+            const questaoAtualMatematica = listaDeQuestoesMatematicaDificil[index]
+            numeroDaQuestaoAtualMatematica = index
+            console.log("questaoAtualMatematica")
+            console.log(questaoAtualMatematica)
+            document.getElementById("spanNumeroDaQuestaoAtualMatematica").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+            document.getElementById("spanQuestaoExibidaMatematica").innerHTML = questaoAtualMatematica.pergunta;
+            document.getElementById("labelOpcaoUmMatematica").innerHTML = questaoAtualMatematica.alternativaA;
+            document.getElementById("labelOpcaoDoisMatematica").innerHTML = questaoAtualMatematica.alternativaB;
+            document.getElementById("labelOpcaoTresMatematica").innerHTML = questaoAtualMatematica.alternativaC;
+            document.getElementById("labelOpcaoQuatroMatematica").innerHTML = questaoAtualMatematica.alternativaD;
+        }
+
     }
 
     function submeterMatematica() {
@@ -780,58 +1013,162 @@
     }
 
     function avancarMatematica() {
-        btnProxMatematica.disabled = true
-        btnSubmeterMatematica.disabled = false
+        if (tipoNivel == "Fácil") {
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = false
 
-        desmarcarRadioButtonsMatematica()
+            desmarcarRadioButtonsMatematica()
 
-        if (numeroDaQuestaoAtualMatematica < quantidadeDeQuestoesMatematica - 1) {
-            preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
-        } else if (numeroDaQuestaoAtualMatematica == quantidadeDeQuestoesMatematica - 1) {
-            alert("Atenção... a próxima é a ultima questão!")
-            preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
-        } else {
-            finalizarJogoMatematica()
+            if (numeroDaQuestaoAtualMatematica < quantidadeDeQuestoesMatematicaFacil - 1) {
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else if (numeroDaQuestaoAtualMatematica == quantidadeDeQuestoesMatematicaFacil - 1) {
+                alert("Atenção... a próxima é a ultima questão sobre matemática!")
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else {
+                finalizarJogoMatematica()
+            }
+            limparCoresBackgroundOpcoesMatematica()
+
+        } else if (tipoNivel == "Médio") {
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = false
+
+            desmarcarRadioButtonsMatematica()
+
+            if (numeroDaQuestaoAtualMatematica < quantidadeDeQuestoesMatematicaMedia - 1) {
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else if (numeroDaQuestaoAtualMatematica == quantidadeDeQuestoesMatematicaMedia - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else {
+                finalizarJogoMatematica()
+            }
+            limparCoresBackgroundOpcoesMatematica()
+
+        } else if (tipoNivel == "Difícil") {
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = false
+
+            desmarcarRadioButtonsMatematica()
+
+            if (numeroDaQuestaoAtualMatematica < quantidadeDeQuestoesMatematicaDificil - 1) {
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else if (numeroDaQuestaoAtualMatematica == quantidadeDeQuestoesMatematicaDificil - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtualMatematica(numeroDaQuestaoAtualMatematica)
+            } else {
+                finalizarJogoMatematica()
+            }
+            limparCoresBackgroundOpcoesMatematica()
         }
-        limparCoresBackgroundOpcoesMatematica()
+
     }
 
     function tentarNovamenteMatematica() {
-
-        cadastrar();
+        tipoNivel = "";
+        tipoNivel = "";
+        tipoNivel = "";
+        window.location.reload()
     }
 
     function checarRespostaMatematica() {
-        const questaoAtual = listaDeQuestoesMatematica[numeroDaQuestaoAtualMatematica] // questão atual 
-        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+        if (tipoNivel == "Fácil") {
+            const questaoAtual = listaDeQuestoesMatematicaFacil[numeroDaQuestaoAtualMatematica] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
 
-        const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
+            const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
 
-        let alternativaCorreta = null // variável para armazenar a alternativa correta
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
 
-        optionsMatematica.forEach((option) => {
-            if (option.value === respostaQuestaoAtual) {
-                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
-                alternativaCorreta = option.labels[0].id
-            }
-        })
+            optionsMatematica.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
 
-        // verifica se resposta assinalada é correta
-        optionsMatematica.forEach((option) => {
-            if (option.checked === true && option.value === respostaQuestaoAtual) {
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                pontuacaoFinalMatematica++
-                certasMatematica++
-                document.getElementById("spanCertasMatematica").innerHTML = certasMatematica
-                numeroDaQuestaoAtualMatematica++
-            } else if (option.checked && option.value !== respostaQuestaoAtual) {
-                const wrongLabelId = option.labels[0].id
+            // verifica se resposta assinalada é correta
+            optionsMatematica.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalMatematica++
+                    certasMatematica++
+                    document.getElementById("spanCertasMatematica").innerHTML = certasMatematica
+                    numeroDaQuestaoAtualMatematica++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
 
-                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
-                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
-                numeroDaQuestaoAtualMatematica++
-            }
-        })
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualMatematica++
+                }
+            })
+
+        } else if (tipoNivel == "Médio") {
+            const questaoAtual = listaDeQuestoesMatematicaMedia[numeroDaQuestaoAtualMatematica] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+            const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
+
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+            optionsMatematica.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
+
+            // verifica se resposta assinalada é correta
+            optionsMatematica.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalMatematica++
+                    certasMatematica++
+                    document.getElementById("spanCertasMatematica").innerHTML = certasMatematica
+                    numeroDaQuestaoAtualMatematica++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
+
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualMatematica++
+                }
+            })
+
+        } else if (tipoNivel == "Difícil") {
+            const questaoAtual = listaDeQuestoesMatematicaDificil[numeroDaQuestaoAtualMatematica] // questão atual 
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+            const optionsMatematica = document.getElementsByName("optionMatematica"); // recupera alternativas no html
+
+            let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+            optionsMatematica.forEach((option) => {
+                if (option.value === respostaQuestaoAtual) {
+                    console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                    alternativaCorreta = option.labels[0].id
+                }
+            })
+
+            // verifica se resposta assinalada é correta
+            optionsMatematica.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    pontuacaoFinalMatematica++
+                    certasMatematica++
+                    document.getElementById("spanCertasMatematica").innerHTML = certasMatematica
+                    numeroDaQuestaoAtualMatematica++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    const wrongLabelId = option.labels[0].id
+
+                    document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                    document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                    numeroDaQuestaoAtualMatematica++
+                }
+            })
+        }
+
     }
 
     function limparCoresBackgroundOpcoesMatematica() {
@@ -850,36 +1187,105 @@
     }
 
     function finalizarJogoMatematica() {
-        let textoParaMensagemFinalMatematica = null
-        let classComCoresParaMensagemFinalMatematica = null
-        const porcentagemFinalDeAcertosMatematica = pontuacaoFinalMatematica / quantidadeDeQuestoesMatematica
+        if (tipoNivel == "Fácil") {
+            let textoParaMensagemFinalMatematica = null
+            let classComCoresParaMensagemFinalMatematica = null
+            const porcentagemFinalDeAcertosMatematica = pontuacaoFinalMatematica / quantidadeDeQuestoesMatematicaFacil
 
-        if (porcentagemFinalDeAcertosMatematica <= 0.3) {
-            textoParaMensagemFinalMatematica = "Parece que você não estudou..."
-            classComCoresParaMensagemFinalMatematica = "text-danger-with-bg"
+            if (porcentagemFinalDeAcertosMatematica <= 0.3) {
+                textoParaMensagemFinalMatematica = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalMatematica = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica > 0.3 && porcentagemFinalDeAcertosMatematica < 0.9) {
+                textoParaMensagemFinalMatematica = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalMatematica = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica >= 0.9) {
+                textoParaMensagemFinalMatematica = "Uau, parabéns!"
+                classComCoresParaMensagemFinalMatematica = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalMatematica += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosMatematica) * 100) + "% das questões de matemática."
+
+
+            document.getElementById('msgFinalMatematica').innerHTML = textoParaMensagemFinalMatematica
+            document.getElementById('msgFinalMatematica').classList.add(classComCoresParaMensagemFinalMatematica)
+            document.getElementById('spanPontuacaoFinalMatematica').innerHTML = pontuacaoFinalMatematica
+
+            document.getElementById('jogoMatematica').classList.add("text-new-gray")
+
+            cadastrar();
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = false
+
+        } else if (tipoNivel == "Médio") {
+            let textoParaMensagemFinalMatematica = null
+            let classComCoresParaMensagemFinalMatematica = null
+            const porcentagemFinalDeAcertosMatematica = pontuacaoFinalMatematica / quantidadeDeQuestoesMatematicaMedia
+
+            if (porcentagemFinalDeAcertosMatematica <= 0.3) {
+                textoParaMensagemFinalMatematica = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalMatematica = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica > 0.3 && porcentagemFinalDeAcertosMatematica < 0.9) {
+                textoParaMensagemFinalMatematica = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalMatematica = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica >= 0.9) {
+                textoParaMensagemFinalMatematica = "Uau, parabéns!"
+                classComCoresParaMensagemFinalMatematica = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalMatematica += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosMatematica) * 100) + "% das questões de matemática."
+
+
+            document.getElementById('msgFinalMatematica').innerHTML = textoParaMensagemFinalMatematica
+            document.getElementById('msgFinalMatematica').classList.add(classComCoresParaMensagemFinalMatematica)
+            document.getElementById('spanPontuacaoFinalMatematica').innerHTML = pontuacaoFinalMatematica
+
+            document.getElementById('jogoMatematica').classList.add("text-new-gray")
+
+            cadastrar()
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = false
+
+        } else if (tipoNivel == "Difícil") {
+            let textoParaMensagemFinalMatematica = null
+            let classComCoresParaMensagemFinalMatematica = null
+            const porcentagemFinalDeAcertosMatematica = pontuacaoFinalMatematica / quantidadeDeQuestoesMatematicaDificil
+
+            if (porcentagemFinalDeAcertosMatematica <= 0.3) {
+                textoParaMensagemFinalMatematica = "Parece que você não estudou..."
+                classComCoresParaMensagemFinalMatematica = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica > 0.3 && porcentagemFinalDeAcertosMatematica < 0.9) {
+                textoParaMensagemFinalMatematica = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinalMatematica = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertosMatematica >= 0.9) {
+                textoParaMensagemFinalMatematica = "Uau, parabéns!"
+                classComCoresParaMensagemFinalMatematica = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinalMatematica += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosMatematica) * 100) + "% das questões de matemática."
+
+
+            document.getElementById('msgFinalMatematica').innerHTML = textoParaMensagemFinalMatematica
+            document.getElementById('msgFinalMatematica').classList.add(classComCoresParaMensagemFinalMatematica)
+            document.getElementById('spanPontuacaoFinalMatematica').innerHTML = pontuacaoFinalMatematica
+
+            document.getElementById('jogoMatematica').classList.add("text-new-gray")
+
+            cadastrar()
+            btnProxMatematica.disabled = true
+            btnSubmeterMatematica.disabled = true
+            // btnConcluir.disabled = true
+            btnTentarNovamenteMatematica.disabled = false
         }
-        else if (porcentagemFinalDeAcertosMatematica > 0.3 && porcentagemFinalDeAcertosMatematica < 0.9) {
-            textoParaMensagemFinalMatematica = "Pode melhorar na próxima, hein!"
-            classComCoresParaMensagemFinalMatematica = "text-warning-with-bg"
-        }
-        else if (porcentagemFinalDeAcertosMatematica >= 0.9) {
-            textoParaMensagemFinalMatematica = "Uau, parabéns!"
-            classComCoresParaMensagemFinalMatematica = "text-success-with-bg"
-        }
-
-        textoParaMensagemFinalMatematica += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertosMatematica) * 100) + "% das questões de matemática."
-
-
-        document.getElementById('msgFinalMatematica').innerHTML = textoParaMensagemFinalMatematica
-        document.getElementById('msgFinalMatematica').classList.add(classComCoresParaMensagemFinalMatematica)
-        document.getElementById('spanPontuacaoFinalMatematica').innerHTML = pontuacaoFinalMatematica
-
-        document.getElementById('jogoMatematica').classList.add("text-new-gray")
-
-        btnProxMatematica.disabled = true
-        btnSubmeterMatematica.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamenteMatematica.disabled = false
 
     }
 
@@ -902,6 +1308,7 @@
                 // Agora vá para o arquivo routes/usuario.js
                 certasSerieServer: certasSerie,
                 certasMatematicaServer: certasMatematica,
+                tipoServer: tipoNivel,
                 id_usuarioServer: id_usuario
             }),
         })
@@ -911,12 +1318,12 @@
                 if (resposta.ok) {
                     console.log("block");
 
-                    console.log
-                        ("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+                    alert
+                        ("Cadastro da pontuação realizado com sucesso! Redirecionando para tela de estatísticas...");
 
                     setTimeout(() => {
                         window.location = "dashboard.html";
-                    }, "2000");
+                    }, "500");
 
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";

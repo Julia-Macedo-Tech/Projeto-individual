@@ -25,7 +25,7 @@ body {
     width: 250px;
     height: 680px;
     background-color: #ffd600;
-    color: #fff;
+    color: #1a1a2e;
     position: fixed;
     top: 0;
     left: 0;
@@ -38,21 +38,21 @@ body {
     box-shadow: rgba(100, 100, 111, 0.486) 0px 7px 29px 0px;
 
     a {
-        color: white;
+        color: #1a1a2e;
         text-decoration: none;
     }
 }
 
 .link {
     a {
-        color: white;
+        color: #1a1a2e;
     }
 }
 
 .linha {
     border-style: solid;
     border-width: 0.5px 0px 0px 0px;
-    border-color: #37b07a;
+    border-color: #1a1a2e;
     margin-top: 20px;
 }
 
@@ -61,8 +61,8 @@ body {
 }
 
 .logoSide img {
-    width: 40px;
-    margin-bottom: 10px;
+    width: 70px;
+    margin-bottom: 5px;
 }
 
 .logoSide h2 {
@@ -93,8 +93,8 @@ body {
 }
 
 .menu .ativo {
-    background: #fff;
-    color: #0f7a4f;
+    background: #1a1a2e;
+    color: #ffd600;
 }
 
 .hello {
@@ -106,7 +106,7 @@ body {
 
 .hello img {
     width: 65px;
-    border: solid 5px white;
+    border: solid 5px #1a1a2e;
     border-radius: 50px;
 }
 
@@ -123,8 +123,16 @@ body {
     align-items: center;
 }
 
+#sair button {
+    background-color: #ffd600;
+    border: none;
+    cursor: pointer;
+}
+
 #sair .link {
-    margin-left: 40px;
+    background-color: #ffd600;
+    border: none;
+    cursor: pointer;
 }
 
 #sair .material-icons {
@@ -158,7 +166,7 @@ body {
 }
 
 #tudo-jogo::-webkit-scrollbar-thumb {
-    background-color: #37b07a;
+    background-color: #1a1a2e;
     border-radius: 2px;
 }
 
@@ -194,29 +202,98 @@ body {
     cursor: pointer;
 }
 
-.material-icons {
-  color: #ffffff;
-  font-size: 35px !important; 
-  font-variation-settings: 'opsz' 40;
-  font-family: 'Material Symbols Outlined';
-  display: inline-block;
-  white-space: nowrap;
-}
-
 #regras {
-    margin-top: 3px;
-    margin-left: 10px;
+    margin-top: 10px;
+    margin-left: 12px;
 }
 
 #regras button {
     padding: 2px;
     border: none;
     background-color: transparent;
+    border-radius: 20px;
+    width: 30px;
     cursor: pointer;
 }
 
-#escolher button img {
+#regras .material-icons {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+#historico {
+    margin-top: -28px;
+    margin-left: 1000px;
     width: 100px;
+}
+
+#historico button {
+    padding: 2px;
+    border: none;
+    background-color: #ffd600;
+    border-radius: 5px;
+    width: 200px;
+    font-family: "Open sans";
+    cursor: pointer;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#escolher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#escolher button img {
+    width: 250px;
+}
+
+#escolher-cartas button {
+    margin-bottom: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+#botao {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 400px;
+    margin-top: 20px;
+}
+
+#botao button {
+    margin-bottom: 15px;
+    background-color: #ff0000;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: "Open sans";
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#botao #jogarbtn {
+    margin-bottom: 15px;
+    background-color: #ff0000;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-family: "Open sans";
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#escolher-cartas {
+    width: 900px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .escolha {
@@ -326,14 +403,17 @@ body {
 #div_vs img {
     width: 120px;
 }
+
 .div-desabilitada {
-  opacity: 0.5;
-  pointer-events: none; /* Impede cliques e interações */
+    opacity: 0.5;
+    pointer-events: none;
+    /* Impede cliques e interações */
 }
 
 #div-invisivel {
-  opacity: 0;
-  pointer-events: none; /* Impede cliques e interações */
+    opacity: 0;
+    pointer-events: none;
+    /* Impede cliques e interações */
 }
 
 #vida_usuario {
@@ -396,11 +476,11 @@ body {
 }
 
 #popup {
-    width: 550px; 
-    height: 350px; 
-    resize: none; 
+    width: 550px;
+    height: 350px;
+    resize: none;
     border: 1px solid #ccc;
-    border-radius: 20px; 
+    border-radius: 20px;
     padding: 20px;
 }
 
@@ -411,10 +491,48 @@ body {
 }
 
 #popupRegras {
-    width: 550px; 
-    height: 350px; 
-    resize: none; 
+    width: 550px;
+    height: 350px;
+    resize: none;
     border: 1px solid #ccc;
-    border-radius: 20px; 
+    border-radius: 20px;
     padding: 20px;
+}
+
+#popupRegras button {
+    padding: 2px;
+    border: none;
+    background-color: #ffd600;
+    border-radius: 5px;
+    width: 200px;
+    font-family: "Open sans";
+    cursor: pointer;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#popupHistorico {
+    width: 550px;
+    height: 350px;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#popupHistorico::-webkit-scrollbar {
+    width: 4px;
+}
+
+#popupHistorico::-webkit-scrollbar-track {
+    background-color: #ffd600;
+    border-radius: 10px;
+}
+
+#popupHistorico::-webkit-scrollbar-thumb {
+    background-color: #1a1a2e;
+    border-radius: 10px;
 }

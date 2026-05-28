@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Jogo</title>
 
     <link rel="stylesheet" href="../style/jogo.css">
     <link rel="icon" href="../assets/icon/icon.ico">
+    <script src="../js/sessao.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -26,7 +27,6 @@
             <div class="logoSide">
                 <img src="../assets/icon/icon.png">
                 <h1>Big Bang Theory</h1>
-                <p>Smart City Solution</p>
                 <div class="linha"></div>
             </div>
             <ul class="menu">
@@ -43,18 +43,18 @@
         </div>
 
         <div class="hello">
-            <img src="../assets/img/sem_foto.png" alt="">
+            <img src="../assets/img/1.png" alt="">
             <span id="b_usuario">usuário</span>
         </div>
 
         <div id="sair">
-            <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
+            <!-- <button onclick="popup.showModal()"><span class="material-icons">settings</span></button>
             <dialog id="popup">
                 <h2>Personalizar avatar</h2>
                 <img src="../assets/img/sem_foto.png" alt="">
                 <button onclick="popup.close()">Fechar</button>
-            </dialog>
-            <span class="link"><a class="material-icons" href="../index.html">logout</a></span>
+            </dialog> -->
+            <button class="link material-icons" onclick="limparSessao()">logout</button>
         </div>
     </div>
 
@@ -63,8 +63,23 @@
         <div id="regras">
             <button onclick="popupRegras.showModal()"><span class="material-icons">info</span></button>
             <dialog id="popupRegras">
-                <p>aaaa</p>
+                <h1>Regras:</h1>
+                <p>1- Escolha 2 cartas para usar na partida.</p>
+                <p>2- A moeda será lançada para decidir quem começa: você ou a máquina.</p>
+                <p>3- Quem começar ataca primeiro ao apertar o botão de ataque.</p>
+                <p>4- Durante a partida, você pode trocar entre suas 2 cartas quando quiser.</p>
+                <p>5- Cada carta possui vida e ataque.</p>
+                <p>6- A rodada continua até todas as cartas de um dos lados serem derrotadas.</p>
                 <button onclick="popupRegras.close()">Fechar</button>
+            </dialog>
+        </div>
+
+        <div id="historico">
+            <button onclick="popupHistorico.showModal()">Histórico de partidas</button>
+            <dialog id="popupHistorico">
+                <div id="div_historico">
+                </div>
+                <button onclick="popupHistorico.close()">Fechar</button>
             </dialog>
         </div>
 
@@ -73,30 +88,34 @@
         </div>
 
         <div id="escolher">
-            <p>Escolher carta:</p>
-            <button id="pedra" onclick="carta(`pedra`)">
-                <img src="../assets/img/pedra.png" alt="Pedra">
-            </button>
+            <h1>Escolha suas cartas:</h1>
+            <div id="escolher-cartas">
+                <button id="pedra" onclick="carta(`pedra`)">
+                    <img src="../assets/img/pedra.png" alt="Pedra">
+                </button>
 
-            <button id="papel" onclick="carta(`papel`)">
-                <img src="../assets/img/papel.png" alt="Papel">
-            </button>
+                <button id="papel" onclick="carta(`papel`)">
+                    <img src="../assets/img/papel.png" alt="Papel">
+                </button>
 
-            <button id="tesoura" onclick="carta(`tesoura`)">
-                <img src="../assets/img/tesoura.png" alt="Tesoura">
-            </button>
+                <button id="tesoura" onclick="carta(`tesoura`)">
+                    <img src="../assets/img/tesoura.png" alt="Tesoura">
+                </button>
 
-            <button id="spock" onclick="carta(`spock`)">
-                <img src="../assets/img/spock.png" alt="Spock">
-            </button>
+                <button id="spock" onclick="carta(`spock`)">
+                    <img src="../assets/img/spock.png" alt="Spock">
+                </button>
 
-            <button id="lagarto" onclick="carta(`lagarto`)">
-                <img src="../assets/img/lagarto.png" alt="Lagarto">
-            </button>
+                <button id="lagarto" onclick="carta(`lagarto`)">
+                    <img src="../assets/img/lagarto.png" alt="Lagarto">
+                </button>
+            </div>
 
-            <button onclick="escolherCartas()">Escolher cartas</button>
+            <div id="botao">
+                <button onclick="escolherCartas()" id="jogarbtn">Jogar</button>
 
-            <button onclick="limpar()">Limpar escolhas</button>
+                <button onclick="limpar()">Limpar escolhas</button>
+            </div>
 
         </div>
 
@@ -150,6 +169,8 @@
 </html>
 
 <script>
+
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
     let partida = 0;
     let vencedor = 2;
@@ -1149,6 +1170,37 @@
             });
 
         return false;
+    }
+
+    listar();
+
+    function listar() {
+        id_usuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/jogo/listar/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    let partida = 1;
+                    for (let i = resposta.length - 1; i >= 0; i--) {
+                        div_historico.innerHTML += `<h3>Partida ${partida}</h3>
+                                <p>Vencedor: ${resposta[i].vencedor}</p>
+                                <p>Data: ${resposta[i].data}</p>
+                                <p>Hora: ${resposta[i].hora}</p>`;
+
+                        partida++;
+                    }
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
 
 </script>

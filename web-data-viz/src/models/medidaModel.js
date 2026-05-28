@@ -5,8 +5,9 @@ function buscarUltimasMedidas(id_usuario, limite_linhas) {
     var instrucaoSql = `SELECT 
         pontuacao_matematica as pontuacao_matematica, 
         pontuacao_serie as pontuacao_serie,
-                        cadastrado_em,
-                        DATE_FORMAT(cadastrado_em,'%H:%i:%s') as cadastrado_em
+        tipo,
+        (SELECT count(*) FROM quiz WHERE fk_usuario = 1) as total_tentativas,
+                        DATE_FORMAT(cadastrado_em, '%d/%m/%Y %H:%i:%s') as cadastrado_em
                     FROM quiz
                     WHERE fk_usuario = ${id_usuario}
                     ORDER BY id_quiz DESC LIMIT ${limite_linhas}`;
@@ -20,7 +21,9 @@ function buscarMedidasEmTempoReal(id_usuario) {
     var instrucaoSql = `SELECT 
         pontuacao_matematica as pontuacao_matematica, 
         pontuacao_serie as pontuacao_serie,
-                        DATE_FORMAT(cadastrado_em,'%H:%i:%s') as cadastrado_em, 
+        tipo,
+        (SELECT count(*) FROM quiz WHERE fk_usuario = 1) as total_tentativas,
+                        DATE_FORMAT(cadastrado_em, '%d/%m/%Y %H:%i:%s') as cadastrado_em,
                         fk_usuario 
                         FROM quiz WHERE fk_usuario = ${id_usuario} 
                     ORDER BY id_quiz DESC LIMIT 1`;

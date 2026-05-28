@@ -68,6 +68,7 @@ body {
     font-size: 18px;
     border: none;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 .inicio-banner {
@@ -103,6 +104,13 @@ body {
     flex-direction: column;
 }
 
+.cor-escura {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 #sobre {
     padding-top: 0.5%;
 }
@@ -113,8 +121,24 @@ body {
     color: #ed7628;
 }
 
+#cientistas {
+    padding-top: 0.5%;
+}
+
+#cientistas h1 {
+    display: flex;
+    justify-content: center;
+    color: #ffd600;
+}
+
 .comeco-texto {
     display: flex;
+}
+
+.comeco-textoCentro {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .div-icons {
@@ -139,6 +163,8 @@ body {
   font-family: 'Material Symbols Outlined';
   display: inline-block;
   white-space: nowrap;
+  margin-left: 19px;
+  margin-top: 8px;
 }
 
 .container1 {
@@ -182,6 +208,63 @@ body {
     border-radius: 5px;
     width: 220px;
     background-color: white;
+}
+
+.personagens {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 800px;
+    margin-bottom: 10px;
+}
+
+.personagens h4 {
+    color: #1a1a2e;
+}
+
+.personagens span {
+    color: #1a1a2e;
+    font-family: "Open sans";
+    font-size: 12px;
+    margin-top: -16px;
+}
+
+#conteudo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    margin-top: 246px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom: solid 3.8px #ffd600;
+    border-right: solid 3.8px #ffd600;
+    border-left: solid 3.8px #ffd600;
+}
+
+.personagem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    border: 2px solid #00000038;
+    border-radius: 12px;
+    width: 300px;
+    height: 350px;
+    background-color: #ffd600;
+    margin-bottom: 10px;
+}
+
+.personagem img {
+    width: 300px;
+    border: solid 3.8px #ffd600;
+    border-radius: 12px;
 }
 
 .div-icons-card {
@@ -235,4 +318,193 @@ body {
 .sobre-img img {
     width: 160px;
     margin-left: 30px;
+}
+
+#curiosidades {
+    padding-top: 0.5%;
+    margin-right: 100px;
+}
+
+#curiosidades h1 {
+    display: flex;
+    justify-content: center;
+    color: #4cc659;
+}
+
+.personagens h4 {
+    color: #000000;
+}
+
+.personagens span {
+    color: #000000;
+    font-family: "Open sans";
+    font-size: 12px;
+    margin-top: -16px;
+}
+
+.curiosidade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    border: 2px solid #00000038;
+    border-radius: 12px;
+    width: 700px;
+    height: 250px;
+    background-color: #1a1a2e;
+    margin-bottom: 10px;
+    margin-right: 300px;
+    background-image: url('../assets/img/young.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: inherit;
+}
+
+.curiosidade1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    border: 2px solid #00000038;
+    border-radius: 12px;
+    border: solid 2px #1a1a2e;
+    width: 700px;
+    height: 250px;
+    background-color: #1a1a2e;
+    margin-bottom: 10px;
+    margin-right: 300px;
+    background-image: url('../assets/img/matematica.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: inherit;
+}
+
+.curiosidade2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+    border: 2px solid #00000038;
+    border-radius: 12px;
+    width: 300px;
+    height: 380px;
+    background-color: #1a1a2e;
+    margin-bottom: 10px;
+    position: absolute;
+    margin-left: 580px;
+    background-image: url('../assets/img/planta.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-clip: inherit;
+}
+
+#texto {
+    flex-direction: column;
+    background-color: #1a1a2e82;
+    position: absolute;
+    width: 500px;
+    height: 80px;
+    margin-top: 172px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+#texto h4 {
+    color: #ffffff;
+    display: inline-block;
+    width: 450px;  
+    margin-left: 10px;
+    margin-top: -1px;
+}
+
+#texto span {
+    color: #ffffff;
+    display: inline-block;
+    width: 450px;  
+    margin-left: 10px;
+}
+
+#texto1 {
+    flex-direction: column;
+    background-color: #1a1a2e82;
+    position: absolute;
+    width: 300px;
+    height: 80px;
+    margin-top: 290px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+#texto1 h4 {
+    color: #ffffff;
+    display: inline-block;
+    width: 280px;  
+    margin-left: 10px;
+    margin-top: -1px;
+}
+
+#texto1 span {
+    color: #ffffff;
+    display: inline-block;
+    width: 280px;  
+    margin-left: 10px;
+}
+
+.curiosidades1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 800px;
+    margin-bottom: 10px;
+}
+
+.curiosidades1 h4 {
+    color: #1a1a2e;
+}
+
+.curiosidades1 span {
+    color: #1a1a2e;
+    font-family: "Open sans";
+    font-size: 12px;
+    margin-top: -16px;
+}
+
+.comeco-texto-Centro {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+    margin-left: 85px;
+}
+
+#quiz {
+    padding-top: 0.5%;
+    margin-right: 100px;
+    padding-bottom: 1.8%;
+}
+
+#quiz h1 {
+    display: flex;
+    justify-content: center;
+    color: #d5312c;
+}
+
+#quiz h3 {
+    font-family: "Open sans";
+}
+
+#quiz button {
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+    background-color: #d5312c;
+    font-family: "Bazinga";
+    font-size: 20px;
+    margin-left: 290px;
+}
+
+#quiz button a {
+    text-decoration: none;
+    color: #ffffff;
 }

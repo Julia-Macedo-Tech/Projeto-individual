@@ -20,6 +20,7 @@ function cadastrar(req, res) {
   var certasSerie = req.body.certasSerieServer;
   var certasMatematica = req.body.certasMatematicaServer;
   let id_usuario = req.body.id_usuarioServer;
+  let tipo = req.body.tipoServer;
 
   if (certasSerie == undefined) {
     res.status(400).send("nome está undefined!");
@@ -28,7 +29,7 @@ function cadastrar(req, res) {
   } else {
 
 
-    quizModel.cadastrar(certasMatematica, certasSerie, id_usuario)
+    quizModel.cadastrar(certasMatematica, certasSerie, tipo, id_usuario)
       .then((resultado) => {
         res.status(201).json(resultado);
       }
