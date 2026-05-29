@@ -527,7 +527,7 @@ body {
 }
 
 #infoQuestaoSerie {
-    width: 300px;
+    width: 400px;
     background-color: #ffd5008b;
     border-radius: 20px;
     text-align: center;
@@ -576,6 +576,7 @@ body {
     border-radius: 5px;
     background-color: #ffd600;
     font-family: "Bazinga";
+    cursor: pointer;
 }
 
 #botoesNovos {
@@ -604,7 +605,7 @@ body {
 }
 
 #infoQuestaoMatematica {
-    width: 300px;
+    width: 400px;
     background-color: #ffd5008b;
     border-radius: 20px;
     text-align: center;
@@ -653,6 +654,7 @@ body {
     border-radius: 5px;
     background-color: #ffd600;
     font-family: "Bazinga";
+    cursor: pointer;
 }
 
 #kpis #kpiTotal .material-icons {

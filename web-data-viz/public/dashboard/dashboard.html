@@ -348,12 +348,12 @@
 
                 somaFacil = registro.pontuacao_serie + registro.pontuacao_matematica;
 
-                if (somaFacil > maiorFacil) {
+                if (somaFacil => maiorFacil) {
                     maiorFacil = somaFacil
                     maiorSerieFacil = registro.pontuacao_serie;
                     maiorMatematicaFacil = registro.pontuacao_matematica;
                     dataFacil = registro.cadastrado_em;
-                    console.log(dataFacil)
+                    console.log(registro)
                 }
 
             } else if (resposta[i].tipo == 'Médio') {
@@ -365,7 +365,7 @@
 
                 somaMedio = registro.pontuacao_serie + registro.pontuacao_matematica;
 
-                if (somaMedio > maiorMedio) {
+                if (somaMedio => maiorMedio) {
                     maiorMedio = somaMedio
                     maiorSerieMedio = registro.pontuacao_serie;
                     maiorMatematicaMedio = registro.pontuacao_matematica;
@@ -381,7 +381,7 @@
 
                 somaDificil = registro.pontuacao_serie + registro.pontuacao_matematica;
 
-                if (somaDificil > maiorDificil) {
+                if (somaDificil => maiorDificil) {
                     maiorDificil = somaDificil
                     maiorSerieDificil = registro.pontuacao_serie;
                     maiorMatematicaDificil = registro.pontuacao_matematica;
